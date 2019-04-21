@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),FotoActivity.class);
             startActivity(intent);
         } else if (id == R.id.salle) {
-            Intent intent = new Intent(getApplicationContext(),SalleActivity.class);
+            Intent intent = new Intent(getApplicationContext(),PlaceActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.music) {

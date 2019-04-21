@@ -47,6 +47,7 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_foto);
+
         btnAddF =findViewById(R.id.btnAddF);
         rvFoto=findViewById(R.id.rvFoto);
         btnBack=findViewById(R.id.btnBack);
@@ -61,6 +62,7 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         viewRecyclerViewFoto();
         fetch();
     }
+
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -72,7 +74,7 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(getApplicationContext(),FotoActivity.class);
             startActivity(intent);
         } else if (id == R.id.salle) {
-            Intent intent = new Intent(getApplicationContext(),SalleActivity.class);
+            Intent intent = new Intent(getApplicationContext(),PlaceActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.music) {
