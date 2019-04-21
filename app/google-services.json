@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "240181943506",
+    "firebase_url": "https://mariage-caf8b.firebaseio.com",
+    "project_id": "mariage-caf8b",
+    "storage_bucket": "mariage-caf8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240181943506:android:2c4766c1cddb7441",
+        "android_client_info": {
+          "package_name": "c.kevin.mariage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240181943506-8909eajd5u2fh13ia1601gmtuc537lss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "c.kevin.mariage",
+            "certificate_hash": "abfd52ff48e804f8ff6e28107f48b037e4baa1a0"
+          }
+        },
+        {
+          "client_id": "240181943506-eq0gb5i5ofo3sn0m44em0f2godvled6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6fbl2Y8UgTfNBwfs_slnJatSjqmFCFmE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240181943506-eq0gb5i5ofo3sn0m44em0f2godvled6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
