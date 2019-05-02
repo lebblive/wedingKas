@@ -25,37 +25,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class PlaceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class OtherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button btnAddP;
-    private RecyclerView rvPlace;
+    private Button btnAddO;
+    private RecyclerView rvOther;
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     Query query= FirebaseDatabase.getInstance()
-            .getReference().child("users").child(uid).child("place");
+            .getReference().child("users").child(uid).child("other");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place);
+        setContentView(R.layout.activity_other);
 
-        btnAddP =findViewById(R.id.btnAddP);
-        rvPlace=findViewById(R.id.rvPlace);
+        btnAddO =findViewById(R.id.btnAddO);
+        rvOther=findViewById(R.id.rvOther);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
         });
-        btnAddP.setOnClickListener(v -> {
-            AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
-            addPlaceFragment.show(getSupportFragmentManager(),"AddPlaceFragment");
+        btnAddO.setOnClickListener(v -> {
+            AddOtherFragment addOtherFragment = new AddOtherFragment();
+            addOtherFragment.show(getSupportFragmentManager(),"AddOtherFragment");
         });
-        viewRecyclerViewPlace();
+        viewRecyclerViewOther();
         fetch();
     }
-
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -94,53 +93,53 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout place_root;
-        public TextView tvNameP;
-        public TextView tvPhoneP;
-        public TextView tvAdressP;
-        public TextView tvMailP;
-        public TextView tvNoteP;
-        public TextView tvPriceP;
+        public ConstraintLayout other_root;
+        public TextView tvNameO;
+        public TextView tvPhoneO;
+        public TextView tvAdressO;
+        public TextView tvMailO;
+        public TextView tvNoteO;
+        public TextView tvPriceO;
         public Button btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            place_root=itemView.findViewById(R.id.place_root);
-            tvNameP=itemView.findViewById(R.id.tvNameP);
-            tvPhoneP=itemView.findViewById(R.id.etPhoneP);
-            tvAdressP=itemView.findViewById(R.id.etAdressP);
-            tvMailP=itemView.findViewById(R.id.etMailP);
-            tvNoteP=itemView.findViewById(R.id.etNoteP);
-            tvPriceP=itemView.findViewById(R.id.etPriceP);
+            other_root=itemView.findViewById(R.id.other_root);
+            tvNameO=itemView.findViewById(R.id.tvNameO);
+            tvPhoneO=itemView.findViewById(R.id.etPhoneO);
+            tvAdressO=itemView.findViewById(R.id.etAdressO);
+            tvMailO=itemView.findViewById(R.id.etMailO);
+            tvNoteO=itemView.findViewById(R.id.etNoteO);
+            tvPriceO=itemView.findViewById(R.id.etPriceO);
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameP(String tvNamePs){
-            tvNameP.setText(tvNamePs);
+        public void setTvNameO(String tvNameOs){
+            tvNameO.setText(tvNameOs);
         }
-        public void setTvPhoneP(String tvPhonePs){
-            tvPhoneP.setText(tvPhonePs);
+        public void setTvPhoneO(String tvPhoneOs){
+            tvPhoneO.setText(tvPhoneOs);
         }
-        public void setTvAdressP(String tvAdressPs){
-            tvAdressP.setText(tvAdressPs);
+        public void setTvAdressO(String tvAdressOs){
+            tvAdressO.setText(tvAdressOs);
         }
-        public void setTvMailP(String tvMailPs) {
-            tvMailP.setText(tvMailPs);
+        public void setTvMailO(String tvMailOs) {
+            tvMailO.setText(tvMailOs);
         }
-        public void setTvNoteP(String tvNotePs){
-            tvNoteP.setText(tvNotePs);
+        public void setTvNoteO(String tvNoteOs){
+            tvNoteO.setText(tvNoteOs);
         }
-        public void setTvPriceP(String tvPricePs){
-            if (tvPricePs.length()!=0) {
-                tvPriceP.setText(tvPricePs + " ₪");
+        public void setTvPriceO(String tvPriceOs){
+            if (tvPriceOs.length()!=0) {
+                tvPriceO.setText(tvPriceOs + " ₪");
             }
         }
     }
 
     private void fetch() {
 
-        FirebaseRecyclerOptions<Place> options=
-                new FirebaseRecyclerOptions.Builder<Place>().setQuery(query, snapshot -> new Place(
+        FirebaseRecyclerOptions<Other> options=
+                new FirebaseRecyclerOptions.Builder<Other>().setQuery(query, snapshot -> new Other(
                         snapshot.child("id").getKey().toString(),
                         snapshot.child("name").getValue().toString(),
                         snapshot.child("phone").getValue().toString(),
@@ -149,42 +148,60 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
                         snapshot.child("note").getValue().toString(),
                         snapshot.child("price").getValue().toString())).build();
 
-        adapter = new FirebaseRecyclerAdapter<Place, PlaceActivity.ViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Other, OtherActivity.ViewHolder>(options) {
 
             @NonNull
             @Override
-            public PlaceActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public OtherActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.place_item,parent,false);
-                return new PlaceActivity.ViewHolder(view);
+                        .inflate(R.layout.other_item,parent,false);
+                return new ViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull PlaceActivity.ViewHolder viewHolder, int i, @NonNull Place place) {
+            protected void onBindViewHolder(@NonNull OtherActivity.ViewHolder viewHolder, int i, @NonNull Other other) {
 
-                viewHolder.setTvNameP(place.getNameP());
-                viewHolder.setTvPhoneP(place.getPhoneP());
-                viewHolder.setTvAdressP(place.getAdressP());
-                viewHolder.setTvMailP(place.getEmailP());
-                viewHolder.setTvNoteP(place.getNoteP());
-                viewHolder.setTvPriceP(place.getPriceP());
+                viewHolder.setTvNameO(other.getNameO());
+                viewHolder.setTvPhoneO(other.getPhoneO());
+                viewHolder.setTvAdressO(other.getAdressO());
+                viewHolder.setTvMailO(other.getEmailO());
+                viewHolder.setTvNoteO(other.getNoteO());
+                viewHolder.setTvPriceO(other.getPriceO());
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String pid=place.getNameP().toString();
+                    String oid=other.getNameO().toString();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("place").child(pid);
+                            .child("users").child(uid).child("other").child(oid);
                     databaseReference.removeValue();
                 });
+                //si je click dessu
+                viewHolder.other_root.setOnClickListener(v -> {
 
+                    String oid=other.getNameO().toString();
+                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
+                            .child("users").child(uid).child("other").child(oid);
+
+                    AddOtherFragment addOtherFragment=new AddOtherFragment();
+                    addOtherFragment.show(getSupportFragmentManager(),"AddOtherFragment");
+
+                    //stam pour le ki dune methode en plus a suprimer
+//                    Random r=new Random();
+//                    int c= Color.rgb(r.nextInt(256),r.nextInt(256),r.nextInt(256));
+//
+//                    viewHolder.foto_root.setBackgroundColor(c);
+
+//                    Toast.makeText(FotoActivity.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                });
             }
         };
-        rvPlace.setAdapter(adapter);
+        rvOther.setAdapter(adapter);
     }
-    private void viewRecyclerViewPlace() {
+
+    private void viewRecyclerViewOther() {
         linearLayoutManager=new LinearLayoutManager(this);
-        rvPlace.setLayoutManager(linearLayoutManager);
-        rvPlace.setHasFixedSize(true);
+        rvOther.setLayoutManager(linearLayoutManager);
+        rvOther.setHasFixedSize(true);
     }
 
 
@@ -203,6 +220,5 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
         super.onStop();
         adapter.stopListening();
     }
-
 
 }

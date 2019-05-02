@@ -1,7 +1,13 @@
 package c.kevin.mariage;
 
 import android.content.Intent;
+import android.icu.util.HebrewCalendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,25 +20,45 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import java.util.Arrays;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RC_SIGN_IN = 123;
+    TextView tvNameMr;
+    TextView tvNameMme;
+    TextView tvDateHebrew;
+    TextView tvDateFrench;
+    TextView tvDay;
+    TextView tvHours;
+    TextView tvMinute;
+    Button btnChange;
 
+    Calendar c=Calendar.getInstance();
+
+    int currentYear=c.get(Calendar.YEAR);
+    int currentMonth=c.get(Calendar.MONTH)+1;
+    int currentDay=c.get(Calendar.DAY_OF_MONTH);
+    int currentHour=c.get(Calendar.HOUR_OF_DAY);
+    int currentMinute=c.get(Calendar.MINUTE);
+    int currentSeconde=c.get(Calendar.SECOND);
+
+    String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +76,106 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         login();
+        layout();
+        btnChange.setOnClickListener(v -> {
+            DateFragment dateFragment=new DateFragment();
+            dateFragment.show(getSupportFragmentManager(),"DateFragment");
+        });
+
+        fetch();
 
     }
 
+    //get profile from data base
+    private void fetch() {
+
+        DatabaseReference dbProfil=FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uid).child("profil");
+
+        dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot!=null){
+                    if (dataSnapshot.child("nameMr").getValue()!=null){
+                        String nameMr=dataSnapshot.child("nameMr").getValue().toString();
+                        tvNameMr.setText(nameMr);
+                    }
+                    if (dataSnapshot.child("nameMme").getValue()!=null){
+                        String nameMme=dataSnapshot.child("nameMme").getValue().toString();
+                        tvNameMme.setText(nameMme);
+                        }
+                    if (dataSnapshot.child("date").getValue()!=null){
+                        String date=dataSnapshot.child("date").getValue().toString();
+                        tvDateFrench.setText(date);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //get dateselected
+        DatabaseReference dbDateSelected=FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uid).child("dateSelected");
+        dbDateSelected.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // get curent date
+                String dateToday = currentYear+"/"
+                        +currentMonth+"/"
+                        +currentDay+" "
+                        +currentHour+":"
+                        +currentMinute;
+                String dateSelectedOnTv=tvDateFrench.getText().toString();
+                String dateSelected=dateSelectedOnTv+" "+"20:30";
+
+                // set compte a rebour
+
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+                try {
+                    Date dDateToday = simpleDateFormat.parse(dateToday);
+                    Date dDateSelected = simpleDateFormat.parse(dateSelected);
+
+                    long differenceDay = dDateSelected.getTime()-dDateToday.getTime();
+                    String restOfDay= String.valueOf(Math.toIntExact((differenceDay / (1000 * 60 * 60 * 24))));
+
+                    String restOfHour= String.valueOf(Math.abs(dDateSelected.getHours()-dDateToday.getHours()));
+                    String restOfMinute= String.valueOf(Math.abs(dDateSelected.getMinutes()-dDateToday.getMinutes()));
+
+                    tvDay.setText(restOfDay);
+                    tvHours.setText(restOfHour);
+                    tvMinute.setText(restOfMinute);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    private void layout() {
+        tvNameMr=findViewById(R.id.tvNameMr);
+        tvNameMme=findViewById(R.id.tvNameMme);
+        tvDateHebrew=findViewById(R.id.tvDateHebrew);
+        tvDateFrench=findViewById(R.id.tvDateFrench);
+        tvDay=findViewById(R.id.tvDay);
+        tvHours=findViewById(R.id.tvHours);
+        tvMinute=findViewById(R.id.tvMinute);
+        btnChange=findViewById(R.id.btnChange);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -95,8 +218,9 @@ public class MainActivity extends AppCompatActivity
             };
             databaseReference.addListenerForSingleValueEvent(valueEventListener);
         }
-     }
 
+
+     }
 
     @Override
     public void onBackPressed() {
@@ -147,8 +271,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.music) {
-
-        } else if (id == R.id.deco) {
+            Intent intent = new Intent(getApplicationContext(),MusicActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.other) {
+            Intent intent = new Intent(getApplicationContext(),OtherActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.invite) {
 

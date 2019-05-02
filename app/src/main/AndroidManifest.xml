@@ -11,13 +11,11 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlaceActivity"></activity>
+        <activity android:name=".OtherActivity"></activity>
+        <activity android:name=".MusicActivity" />
+        <activity android:name=".PlaceActivity" />
         <activity android:name=".FotoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

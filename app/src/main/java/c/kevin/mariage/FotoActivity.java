@@ -1,9 +1,7 @@
 package c.kevin.mariage;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,14 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -28,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-
-import java.util.Random;
 
 public class FotoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,11 +70,12 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.salle) {
             Intent intent = new Intent(getApplicationContext(),PlaceActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.music) {
-
-        } else if (id == R.id.deco) {
-
+            Intent intent = new Intent(getApplicationContext(),MusicActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.other) {
+            Intent intent = new Intent(getApplicationContext(),OtherActivity.class);
+            startActivity(intent);
         } else if (id == R.id.invite) {
 
         } else if (id == R.id.table) {
@@ -189,6 +184,7 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
                             .child("users").child(uid).child("foto").child(fid);
                     databaseReference.removeValue();
                 });
+
                 //si je click dessu
                 viewHolder.foto_root.setOnClickListener(v -> {
 
@@ -211,8 +207,6 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         };
         rvFoto.setAdapter(adapter);
         }
-
-
     private void viewRecyclerViewFoto() {
         linearLayoutManager=new LinearLayoutManager(this);
         rvFoto.setLayoutManager(linearLayoutManager);
@@ -235,5 +229,8 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         super.onStop();
         adapter.stopListening();
     }
+
+
+
 
 }

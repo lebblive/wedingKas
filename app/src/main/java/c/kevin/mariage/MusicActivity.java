@@ -25,34 +25,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class PlaceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MusicActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button btnAddP;
-    private RecyclerView rvPlace;
+    private Button btnAddM;
+    private RecyclerView rvMusic;
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     Query query= FirebaseDatabase.getInstance()
-            .getReference().child("users").child(uid).child("place");
+            .getReference().child("users").child(uid).child("music");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place);
+        setContentView(R.layout.activity_music);
 
-        btnAddP =findViewById(R.id.btnAddP);
-        rvPlace=findViewById(R.id.rvPlace);
+        btnAddM =findViewById(R.id.btnAddM);
+        rvMusic=findViewById(R.id.rvMusic);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
         });
-        btnAddP.setOnClickListener(v -> {
-            AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
-            addPlaceFragment.show(getSupportFragmentManager(),"AddPlaceFragment");
+        btnAddM.setOnClickListener(v -> {
+            AddMusicFragment addMusicFragment=new AddMusicFragment();
+            addMusicFragment.show(getSupportFragmentManager(),"AddMusicFragment");
         });
-        viewRecyclerViewPlace();
+        viewRecyclerViewMusic();
         fetch();
     }
 
@@ -94,53 +94,53 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout place_root;
-        public TextView tvNameP;
-        public TextView tvPhoneP;
-        public TextView tvAdressP;
-        public TextView tvMailP;
-        public TextView tvNoteP;
-        public TextView tvPriceP;
+        public ConstraintLayout music_root;
+        public TextView tvNameM;
+        public TextView tvPhoneM;
+        public TextView tvAdressM;
+        public TextView tvMailM;
+        public TextView tvNoteM;
+        public TextView tvPriceM;
         public Button btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            place_root=itemView.findViewById(R.id.place_root);
-            tvNameP=itemView.findViewById(R.id.tvNameP);
-            tvPhoneP=itemView.findViewById(R.id.etPhoneP);
-            tvAdressP=itemView.findViewById(R.id.etAdressP);
-            tvMailP=itemView.findViewById(R.id.etMailP);
-            tvNoteP=itemView.findViewById(R.id.etNoteP);
-            tvPriceP=itemView.findViewById(R.id.etPriceP);
+            music_root=itemView.findViewById(R.id.music_root);
+            tvNameM=itemView.findViewById(R.id.tvNameM);
+            tvPhoneM=itemView.findViewById(R.id.etPhoneM);
+            tvAdressM=itemView.findViewById(R.id.etAdressM);
+            tvMailM=itemView.findViewById(R.id.etMailM);
+            tvNoteM=itemView.findViewById(R.id.etNoteM);
+            tvPriceM=itemView.findViewById(R.id.etPriceM);
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameP(String tvNamePs){
-            tvNameP.setText(tvNamePs);
+        public void setTvNameM(String tvNameMs){
+            tvNameM.setText(tvNameMs);
         }
-        public void setTvPhoneP(String tvPhonePs){
-            tvPhoneP.setText(tvPhonePs);
+        public void setTvPhoneM(String tvPhoneMs){
+            tvPhoneM.setText(tvPhoneMs);
         }
-        public void setTvAdressP(String tvAdressPs){
-            tvAdressP.setText(tvAdressPs);
+        public void setTvAdressM(String tvAdressMs){
+            tvAdressM.setText(tvAdressMs);
         }
-        public void setTvMailP(String tvMailPs) {
-            tvMailP.setText(tvMailPs);
+        public void setTvMailM(String tvMailMs) {
+            tvMailM.setText(tvMailMs);
         }
-        public void setTvNoteP(String tvNotePs){
-            tvNoteP.setText(tvNotePs);
+        public void setTvNoteM(String tvNoteMs){
+            tvNoteM.setText(tvNoteMs);
         }
-        public void setTvPriceP(String tvPricePs){
-            if (tvPricePs.length()!=0) {
-                tvPriceP.setText(tvPricePs + " ₪");
+        public void setTvPriceM(String tvPriceMs){
+            if (tvPriceMs.length()!=0) {
+                tvPriceM.setText(tvPriceMs + " ₪");
             }
         }
     }
 
     private void fetch() {
 
-        FirebaseRecyclerOptions<Place> options=
-                new FirebaseRecyclerOptions.Builder<Place>().setQuery(query, snapshot -> new Place(
+        FirebaseRecyclerOptions<Music> options=
+                new FirebaseRecyclerOptions.Builder<Music>().setQuery(query, snapshot -> new Music(
                         snapshot.child("id").getKey().toString(),
                         snapshot.child("name").getValue().toString(),
                         snapshot.child("phone").getValue().toString(),
@@ -149,42 +149,52 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
                         snapshot.child("note").getValue().toString(),
                         snapshot.child("price").getValue().toString())).build();
 
-        adapter = new FirebaseRecyclerAdapter<Place, PlaceActivity.ViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Music, MusicActivity.ViewHolder>(options) {
 
             @NonNull
             @Override
-            public PlaceActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public MusicActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.place_item,parent,false);
-                return new PlaceActivity.ViewHolder(view);
+                        .inflate(R.layout.music_item,parent,false);
+                return new ViewHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull PlaceActivity.ViewHolder viewHolder, int i, @NonNull Place place) {
+            protected void onBindViewHolder(@NonNull MusicActivity.ViewHolder viewHolder, int i, @NonNull Music music) {
 
-                viewHolder.setTvNameP(place.getNameP());
-                viewHolder.setTvPhoneP(place.getPhoneP());
-                viewHolder.setTvAdressP(place.getAdressP());
-                viewHolder.setTvMailP(place.getEmailP());
-                viewHolder.setTvNoteP(place.getNoteP());
-                viewHolder.setTvPriceP(place.getPriceP());
+                viewHolder.setTvNameM(music.getNameM());
+                viewHolder.setTvPhoneM(music.getPhoneM());
+                viewHolder.setTvAdressM(music.getAdressM());
+                viewHolder.setTvMailM(music.getEmailM());
+                viewHolder.setTvNoteM(music.getNoteM());
+                viewHolder.setTvPriceM(music.getPriceM());
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String pid=place.getNameP().toString();
+                    String mid=music.getNameM().toString();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("place").child(pid);
+                            .child("users").child(uid).child("music").child(mid);
                     databaseReference.removeValue();
                 });
+                //si je click dessu
+                viewHolder.music_root.setOnClickListener(v -> {
 
+                    String mid=music.getNameM().toString();
+                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
+                            .child("users").child(uid).child("music").child(mid);
+
+                    AddMusicFragment addMusicFragment=new AddMusicFragment();
+                    addMusicFragment.show(getSupportFragmentManager(),"AddMusicFragment");
+                });
             }
         };
-        rvPlace.setAdapter(adapter);
+        rvMusic.setAdapter(adapter);
     }
-    private void viewRecyclerViewPlace() {
+
+    private void viewRecyclerViewMusic() {
         linearLayoutManager=new LinearLayoutManager(this);
-        rvPlace.setLayoutManager(linearLayoutManager);
-        rvPlace.setHasFixedSize(true);
+        rvMusic.setLayoutManager(linearLayoutManager);
+        rvMusic.setHasFixedSize(true);
     }
 
 
@@ -203,6 +213,5 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
         super.onStop();
         adapter.stopListening();
     }
-
 
 }
