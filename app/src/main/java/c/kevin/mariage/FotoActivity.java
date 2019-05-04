@@ -51,6 +51,10 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         });
         btnAddF.setOnClickListener(v -> {
             AddFotoFragment addFotoFragment=new AddFotoFragment();
+            String add="add";
+            Bundle bundle=new Bundle();
+            bundle.putString("add",add);
+            addFotoFragment.setArguments(bundle);
             addFotoFragment.show(getSupportFragmentManager(),"AddFotoFragment");
         });
         viewRecyclerViewFoto();
@@ -121,7 +125,10 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public void setTvNameF(String tvNameFs){
-                tvNameF.setText(tvNameFs);
+//                if (tvNameFs.length()!=0){
+                    tvNameF.setText(tvNameFs);
+//                }
+
             }
         public void setTvPhoneF(String tvPhoneFs){
                 tvPhoneF.setText(tvPhoneFs);
@@ -193,6 +200,14 @@ public class FotoActivity extends AppCompatActivity implements NavigationView.On
                             .child("users").child(uid).child("foto").child(fid);
 
                     AddFotoFragment addFotoFragment=new AddFotoFragment();
+                    /*
+                    set the id on selected for
+                    if i touch this i can update the info
+                    so i set the id on the fragment for get her
+                     */
+                    Bundle bundle=new Bundle();
+                    bundle.putString("fid",fid);
+                    addFotoFragment.setArguments(bundle);
                     addFotoFragment.show(getSupportFragmentManager(),"AddFotoFragment");
 
                     //stam pour le kif dune methode en plus a suprimer

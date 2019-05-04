@@ -16,8 +16,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,8 +65,59 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
+        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+            getInfo();
+        }
         btnSaveP.setOnClickListener(v -> {
             setInfoPlace();
+        });
+    }
+    private void getInfo() {
+        String idP=this.getArguments().getString("pid");
+
+        DatabaseReference dbFoto = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uid).child("place").child(idP);
+        dbFoto.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object  dsName=dataSnapshot.child("name").getValue();
+                Object  dsPhone=dataSnapshot.child("phone").getValue();
+                Object  dsAdress=dataSnapshot.child("adress").getValue();
+                Object  dsEmail=dataSnapshot.child("email").getValue();
+                Object  dsPrice=dataSnapshot.child("price").getValue();
+                Object  dsNote=dataSnapshot.child("note").getValue();
+
+                if (dsName!=null){
+                    String nameF=dsName.toString();
+                    etNameP.setText(nameF);
+                }
+                if (dsPhone!=null){
+                    String phoneF=dsPhone.toString();
+                    etPhoneP.setText(phoneF);
+                }
+                if (dsAdress!=null){
+                    String adressF=dsAdress.toString();
+                    etAdressP.setText(adressF);
+                }
+                if (dsEmail!=null){
+                    String emailF=dsEmail.toString();
+                    etMailP.setText(emailF);
+                }
+                if (dsPrice!=null){
+                    String priceF=dsPrice.toString();
+                    etPriceP.setText(priceF);
+                }
+                if (dsNote!=null){
+                    String noteF=dsNote.toString();
+                    etNoteP.setText(noteF);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 

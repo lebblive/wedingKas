@@ -24,8 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -39,7 +42,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DateFragment extends AppCompatDialogFragment {
+public class ProfilFragment extends AppCompatDialogFragment {
 
     EditText etNameMr;
     EditText etNameMme;
@@ -55,7 +58,7 @@ public class DateFragment extends AppCompatDialogFragment {
 
 
 
-    public DateFragment() {
+    public ProfilFragment() {
         // Required empty public constructor
     }
 
@@ -81,26 +84,55 @@ public class DateFragment extends AppCompatDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
+        getProfil();
         setProfilDate();
 
 
         btnSaveD.setOnClickListener(v -> {
             saveD();
         });
+    }
 
+    // if profil exist get value
+    private void getProfil() {
+        DatabaseReference dbProfil=FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uid).child("profil");
+        dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object dsNameMr=dataSnapshot.child("nameMr").getValue();
+                Object dsNameMme=dataSnapshot.child("nameMme").getValue();
+                Object dsDate=dataSnapshot.child("date").getValue();
+                if (dsNameMr!=null){
+                    String nameMr=dsNameMr.toString();
+                    etNameMr.setText(nameMr);
+                }
+                if (dsNameMme!=null){
+                    String nameMme=dsNameMme.toString();
+                    etNameMme.setText(nameMme);
+                }
+                if (dsDate!=null){
+                    String date=dsDate.toString();
+                    tvDate.setText(date);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // get UI date
     private void setProfilDate() {
 
-
-
         cvDate.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             int yearSelected = year;
             int monthSelected = month+1; // because 0=january
             int dayOfMonthSelected = dayOfMonth;
-            String date=year+"/"+monthSelected+"/"+dayOfMonth;
-
+//            String date=year+"/"+monthSelected+"/"+dayOfMonth;
+            String date=dayOfMonth+"/"+monthSelected+"/"+year;
 
             DatabaseReference databaseReference=
                     FirebaseDatabase.getInstance().getReference()
@@ -110,13 +142,7 @@ public class DateFragment extends AppCompatDialogFragment {
             mapDate.put("dayOfMonth",dayOfMonthSelected);
             mapDate.put("date",date);
             databaseReference.setValue(mapDate);
-            System.out.println("HashMap  : "+mapDate);
-
-
-
-
-//            String date=dayOfMonth+"/"+month+"/"+year;
-
+//            System.out.println("HashMap  : "+mapDate);
             tvDate.setText(date);
         });
     }
@@ -129,7 +155,6 @@ public class DateFragment extends AppCompatDialogFragment {
         String nameMme=etNameMme.getText().toString();
         String date=tvDate.getText().toString();
 
-
         DatabaseReference databaseReference=
                 FirebaseDatabase.getInstance().getReference()
                 .child("users").child(uid).child("profil");
@@ -141,18 +166,6 @@ public class DateFragment extends AppCompatDialogFragment {
         databaseReference.setValue(mapProfil);
         Intent intent=new Intent(getContext(),MainActivity.class);
         startActivity(intent);
-
-
-
-
-
-        //set name of couple and date
-//        Intent intent=new Intent(getContext(),MainActivity.class);
-//        intent.putExtra(EXTRA_NAMEMR,nameMr);
-//        intent.putExtra(EXTRA_NAMEMME,nameMme);
-//        intent.putExtra(EXTRA_DATE,date);
-//
-//        startActivity(intent);
 
     }
 

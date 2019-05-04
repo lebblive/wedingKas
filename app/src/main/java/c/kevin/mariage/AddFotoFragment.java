@@ -5,6 +5,7 @@ https://medium.com/android-grid/how-to-use-firebaserecycleradpater-with-latest-f
  */
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.Intent.getIntent;
 
 
 public class AddFotoFragment extends AppCompatDialogFragment {
@@ -34,6 +41,8 @@ public class AddFotoFragment extends AppCompatDialogFragment {
     Button btnSaveF;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseReference blabla =FirebaseDatabase.getInstance().getReference()
+            .child("users").child(uid);
 
     public AddFotoFragment() {
         // Required empty public constructor
@@ -55,10 +64,16 @@ public class AddFotoFragment extends AppCompatDialogFragment {
         return v;
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
+        //get info on FotoActivity
+
+        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+            getInfo();
+        }
         btnSaveF.setOnClickListener(v -> {
             setInfoFoto();
         });
@@ -101,7 +116,58 @@ public class AddFotoFragment extends AppCompatDialogFragment {
                 une chaîne de caractères
                 */
         //etName.equalsIgnoreCase(".")
-            }
+    }
+
+    private void getInfo() {
+
+            String idF = this.getArguments().getString("fid");
+
+            DatabaseReference dbFoto = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid).child("foto").child(idF);
+            dbFoto.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Object dsName = dataSnapshot.child("name").getValue();
+                    Object dsPhone = dataSnapshot.child("phone").getValue();
+                    Object dsAdress = dataSnapshot.child("adress").getValue();
+                    Object dsEmail = dataSnapshot.child("email").getValue();
+                    Object dsPrice = dataSnapshot.child("price").getValue();
+                    Object dsNote = dataSnapshot.child("note").getValue();
+
+                    if (dsName != null) {
+                        String nameF = dsName.toString();
+                        etNameF.setText(nameF);
+                    }
+                    if (dsPhone != null) {
+                        String phoneF = dsPhone.toString();
+                        etPhoneF.setText(phoneF);
+                    }
+                    if (dsAdress != null) {
+                        String adressF = dsAdress.toString();
+                        etAdressF.setText(adressF);
+                    }
+                    if (dsEmail != null) {
+                        String emailF = dsEmail.toString();
+                        etMailF.setText(emailF);
+                    }
+                    if (dsPrice != null) {
+                        String priceF = dsPrice.toString();
+                        etPriceF.setText(priceF);
+                    }
+                    if (dsNote != null) {
+                        String noteF = dsNote.toString();
+                        etNoteF.setText(noteF);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+    }
+
 
     private void layout(View view) {
         etNameF=view.findViewById(R.id.etNameF);

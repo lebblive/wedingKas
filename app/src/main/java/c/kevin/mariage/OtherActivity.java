@@ -50,6 +50,10 @@ public class OtherActivity extends AppCompatActivity implements NavigationView.O
         });
         btnAddO.setOnClickListener(v -> {
             AddOtherFragment addOtherFragment = new AddOtherFragment();
+            String add="add";
+            Bundle bundle=new Bundle();
+            bundle.putString("add",add);
+            addOtherFragment.setArguments(bundle);
             addOtherFragment.show(getSupportFragmentManager(),"AddOtherFragment");
         });
         viewRecyclerViewOther();
@@ -183,15 +187,11 @@ public class OtherActivity extends AppCompatActivity implements NavigationView.O
                             .child("users").child(uid).child("other").child(oid);
 
                     AddOtherFragment addOtherFragment=new AddOtherFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("oid",oid);
+                    addOtherFragment.setArguments(bundle);
                     addOtherFragment.show(getSupportFragmentManager(),"AddOtherFragment");
 
-                    //stam pour le ki dune methode en plus a suprimer
-//                    Random r=new Random();
-//                    int c= Color.rgb(r.nextInt(256),r.nextInt(256),r.nextInt(256));
-//
-//                    viewHolder.foto_root.setBackgroundColor(c);
-
-//                    Toast.makeText(FotoActivity.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
                 });
             }
         };

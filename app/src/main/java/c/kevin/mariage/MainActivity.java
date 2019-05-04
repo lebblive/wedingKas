@@ -1,7 +1,6 @@
 package c.kevin.mariage;
 
 import android.content.Intent;
-import android.icu.util.HebrewCalendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity
     int currentDay=c.get(Calendar.DAY_OF_MONTH);
     int currentHour=c.get(Calendar.HOUR_OF_DAY);
     int currentMinute=c.get(Calendar.MINUTE);
-    int currentSeconde=c.get(Calendar.SECOND);
 
     String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -78,8 +76,8 @@ public class MainActivity extends AppCompatActivity
         login();
         layout();
         btnChange.setOnClickListener(v -> {
-            DateFragment dateFragment=new DateFragment();
-            dateFragment.show(getSupportFragmentManager(),"DateFragment");
+            ProfilFragment profilFragment =new ProfilFragment();
+            profilFragment.show(getSupportFragmentManager(),"ProfilFragment");
         });
 
         fetch();
@@ -126,9 +124,9 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 // get curent date
-                String dateToday = currentYear+"/"
+                String dateToday = currentDay+"/"
                         +currentMonth+"/"
-                        +currentDay+" "
+                        +currentYear+" "
                         +currentHour+":"
                         +currentMinute;
                 String dateSelectedOnTv=tvDateFrench.getText().toString();
@@ -136,7 +134,8 @@ public class MainActivity extends AppCompatActivity
 
                 // set compte a rebour
 
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm");
+//                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                 try {
                     Date dDateToday = simpleDateFormat.parse(dateToday);
@@ -148,9 +147,9 @@ public class MainActivity extends AppCompatActivity
                     String restOfHour= String.valueOf(Math.abs(dDateSelected.getHours()-dDateToday.getHours()));
                     String restOfMinute= String.valueOf(Math.abs(dDateSelected.getMinutes()-dDateToday.getMinutes()));
 
-                    tvDay.setText(restOfDay);
-                    tvHours.setText(restOfHour);
-                    tvMinute.setText(restOfMinute);
+                    tvDay.setText(restOfDay+" DAY");
+                    tvHours.setText(restOfHour+" HOUR");
+                    tvMinute.setText(restOfMinute+" MINUTE0");
 
                 } catch (ParseException e) {
                     e.printStackTrace();

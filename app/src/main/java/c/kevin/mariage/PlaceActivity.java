@@ -50,6 +50,10 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
         });
         btnAddP.setOnClickListener(v -> {
             AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
+            String add="add";
+            Bundle bundle=new Bundle();
+            bundle.putString("add",add);
+            addPlaceFragment.setArguments(bundle);
             addPlaceFragment.show(getSupportFragmentManager(),"AddPlaceFragment");
         });
         viewRecyclerViewPlace();
@@ -175,6 +179,17 @@ public class PlaceActivity extends AppCompatActivity implements NavigationView.O
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("place").child(pid);
                     databaseReference.removeValue();
+                });
+
+                viewHolder.place_root.setOnClickListener(v -> {
+                    String pid=place.getNameP().toString();
+                    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference()
+                            .child("users").child(uid).child("place").child(pid);
+                    AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("pid",pid);
+                    addPlaceFragment.setArguments(bundle);
+                    addPlaceFragment.show(getSupportFragmentManager(),"AddPlaceFragment");
                 });
 
             }

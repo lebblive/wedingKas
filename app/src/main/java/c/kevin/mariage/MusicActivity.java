@@ -50,6 +50,10 @@ public class MusicActivity extends AppCompatActivity implements NavigationView.O
         });
         btnAddM.setOnClickListener(v -> {
             AddMusicFragment addMusicFragment=new AddMusicFragment();
+            String add="add";
+            Bundle bundle=new Bundle();
+            bundle.putString("add",add);
+            addMusicFragment.setArguments(bundle);
             addMusicFragment.show(getSupportFragmentManager(),"AddMusicFragment");
         });
         viewRecyclerViewMusic();
@@ -184,6 +188,9 @@ public class MusicActivity extends AppCompatActivity implements NavigationView.O
                             .child("users").child(uid).child("music").child(mid);
 
                     AddMusicFragment addMusicFragment=new AddMusicFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("mid",mid);
+                    addMusicFragment.setArguments(bundle);
                     addMusicFragment.show(getSupportFragmentManager(),"AddMusicFragment");
                 });
             }
