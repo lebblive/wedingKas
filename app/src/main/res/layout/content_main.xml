@@ -20,35 +20,23 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDateHebrew"
+        app:layout_constraintBottom_toTopOf="@+id/tvDateFrench"
         app:layout_constraintEnd_toStartOf="@+id/tvNameMme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDateHebrew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hebrew"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvDateFrench"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameMr" />
 
     <TextView
         android:id="@+id/tvDateFrench"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="french"
+        android:text="date"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDateHebrew" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNameMr" />
 
     <TextView
         android:id="@+id/tvDay"
@@ -109,14 +97,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.26" />
 
     <TextView
         android:id="@+id/tvNameMme"
@@ -126,11 +114,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:textColor="#000000"
-        android:textSize="16sp"
         android:text="name his"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/tvDateHebrew"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDateFrench"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvNameMr"
         app:layout_constraintTop_toTopOf="parent" />

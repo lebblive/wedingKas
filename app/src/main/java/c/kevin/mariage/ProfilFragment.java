@@ -3,16 +3,7 @@ package c.kevin.mariage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +12,6 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,13 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -134,14 +124,14 @@ public class ProfilFragment extends AppCompatDialogFragment {
 //            String date=year+"/"+monthSelected+"/"+dayOfMonth;
             String date=dayOfMonth+"/"+monthSelected+"/"+year;
 
-            DatabaseReference databaseReference=
-                    FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(uid).child("dateSelected");
-            Map<String,Object> mapDate=new HashMap<>();
-            mapDate.put("month",monthSelected);
-            mapDate.put("dayOfMonth",dayOfMonthSelected);
-            mapDate.put("date",date);
-            databaseReference.setValue(mapDate);
+//            DatabaseReference databaseReference=
+//                    FirebaseDatabase.getInstance().getReference()
+//                    .child("users").child(uid).child("dateSelected");
+//            Map<String,Object> mapDate=new HashMap<>();
+//            mapDate.put("month",monthSelected);
+//            mapDate.put("dayOfMonth",dayOfMonthSelected);
+//            mapDate.put("date",date);
+//            databaseReference.setValue(mapDate);
 //            System.out.println("HashMap  : "+mapDate);
             tvDate.setText(date);
         });

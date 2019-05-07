@@ -1,17 +1,8 @@
 package c.kevin.mariage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,13 +10,18 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class MusicActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MusicActivity extends AppCompatActivity  {
 
     private Button btnAddM;
     private RecyclerView rvMusic;
@@ -60,41 +56,6 @@ public class MusicActivity extends AppCompatActivity implements NavigationView.O
         fetch();
     }
 
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.home) {
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.photo) {
-            Intent intent = new Intent(getApplicationContext(),FotoActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.salle) {
-            Intent intent = new Intent(getApplicationContext(),PlaceActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.music) {
-            Intent intent = new Intent(getApplicationContext(),MusicActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.other) {
-            Intent intent = new Intent(getApplicationContext(),OtherActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.invite) {
-
-        } else if (id == R.id.table) {
-
-        } else if (id == R.id.list) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 

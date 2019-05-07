@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity
     private static final int RC_SIGN_IN = 123;
     TextView tvNameMr;
     TextView tvNameMme;
-    TextView tvDateHebrew;
     TextView tvDateFrench;
     TextView tvDay;
     TextView tvHours;
@@ -55,8 +55,15 @@ public class MainActivity extends AppCompatActivity
     int currentDay=c.get(Calendar.DAY_OF_MONTH);
     int currentHour=c.get(Calendar.HOUR_OF_DAY);
     int currentMinute=c.get(Calendar.MINUTE);
+     int name=0;
+     int man=0;
+    int woman=0;
+    int old =0;
+    int adult=0;
+    int young =0;
 
-    String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+//    String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,94 +88,193 @@ public class MainActivity extends AppCompatActivity
         });
 
         fetch();
+        getNumberPerson();
 
+    }
+
+    private void getNumberPerson() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        if (FirebaseDatabase.getInstance().getReference()
+                .child("users").child(uid).child("contact") != null) {
+
+
+            DatabaseReference dbRangerContact = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid).child("contact");
+
+
+            dbRangerContact.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList arrayList=new ArrayList();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        String pushKey = snapshot.getKey();
+                        arrayList.add(pushKey);
+
+                    }
+//                    System.out.println(arrayList);
+//                    System.out.println("size "+arrayList.size());
+//                    System.out.println("1 "+arrayList.get(1).toString());
+                    for (int i=0;i<arrayList.size();i++){
+                        String idC= (String) arrayList.get(i);
+//                        System.out.println(idC);
+                        DatabaseReference dbNumber=FirebaseDatabase.getInstance().getReference()
+                                .child("users").child(uid).child("contact").child(idC);
+                        dbNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                                String dsFirstName = (String) dataSnapshot.child("firstName").getValue();
+                                String dsFamilyName = (String) dataSnapshot.child("familyName").getValue();
+                                String dsPhone = (String) dataSnapshot.child("phone").getValue();
+
+                                String dsSexe = (String) dataSnapshot.child("sexe").getValue();
+                                String dsAge = (String) dataSnapshot.child("age").getValue();
+
+                                String dsNoteContact = (String) dataSnapshot.child("noteContact").getValue();
+
+                                if (dsFirstName.length()!=0 || dsFamilyName.length()!=0){
+                                    name++;
+
+                                }else {
+                                    System.out.println("777");
+                                }
+                                if (dsSexe.equals("Man")){
+                                    man ++;
+                                }else if (dsSexe.equals("woman")){
+                                    woman ++;
+                                }
+
+                                /*
+                                TODO : continuer le conteur 
+                                 */
+//
+//                                System.out.println("3 "+dsFirstName);
+//                                System.out.println("4 "+dsFamilyName);
+//                                System.out.println("5 "+dsPhone);
+//                                System.out.println("6 "+dsSexe);
+//                                System.out.println("7 "+dsAge);
+//                                System.out.println("8 "+dsNoteContact);
+                            }
+
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            System.out.println("name "+ name);
+            System.out.println("man " +man);
+            System.out.println("woman " +woman);
+        }else {
+            System.out.println("coucouc");
+        }
     }
 
     //get profile from data base
     private void fetch() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
-        DatabaseReference dbProfil=FirebaseDatabase.getInstance().getReference()
-                .child("users").child(uid).child("profil");
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference dbProfil = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid).child("profil");
 
-        dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot!=null){
-                    if (dataSnapshot.child("nameMr").getValue()!=null){
-                        String nameMr=dataSnapshot.child("nameMr").getValue().toString();
-                        tvNameMr.setText(nameMr);
-                    }
-                    if (dataSnapshot.child("nameMme").getValue()!=null){
-                        String nameMme=dataSnapshot.child("nameMme").getValue().toString();
-                        tvNameMme.setText(nameMme);
+            dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot != null) {
+                        if (dataSnapshot.child("nameMr").getValue() != null) {
+                            String nameMr = dataSnapshot.child("nameMr").getValue().toString();
+                            tvNameMr.setText(nameMr);
                         }
-                    if (dataSnapshot.child("date").getValue()!=null){
-                        String date=dataSnapshot.child("date").getValue().toString();
-                        tvDateFrench.setText(date);
+                        if (dataSnapshot.child("nameMme").getValue() != null) {
+                            String nameMme = dataSnapshot.child("nameMme").getValue().toString();
+                            tvNameMme.setText(nameMme);
+                        }
+                        if (dataSnapshot.child("date").getValue() != null) {
+                            String date = dataSnapshot.child("date").getValue().toString();
+                            tvDateFrench.setText(date);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
-        //get dateselected
-        DatabaseReference dbDateSelected=FirebaseDatabase.getInstance().getReference()
-                .child("users").child(uid).child("dateSelected");
-        dbDateSelected.addListenerForSingleValueEvent(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            //get dateselected
+            DatabaseReference dbDateSelected = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid).child("profil");
+            dbDateSelected.addListenerForSingleValueEvent(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                // get curent date
-                String dateToday = currentDay+"/"
-                        +currentMonth+"/"
-                        +currentYear+" "
-                        +currentHour+":"
-                        +currentMinute;
-                String dateSelectedOnTv=tvDateFrench.getText().toString();
-                String dateSelected=dateSelectedOnTv+" "+"20:30";
+                    // get curent date
+                    String dateToday = currentDay + "/"
+                            + currentMonth + "/"
+                            + currentYear + " "
+                            + currentHour + ":"
+                            + currentMinute;
+                    //get date selected
+                    String dateSelectedOnTv = tvDateFrench.getText().toString();
+                    String dateSelected = dateSelectedOnTv + " " + "20:30";
 
-                // set compte a rebour
+
+                    // set compte a rebour
 
 //                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-                try {
-                    Date dDateToday = simpleDateFormat.parse(dateToday);
-                    Date dDateSelected = simpleDateFormat.parse(dateSelected);
+                    try {
+                        Date dDateToday = simpleDateFormat.parse(dateToday);
+                        Date dDateSelected = simpleDateFormat.parse(dateSelected);
 
-                    long differenceDay = dDateSelected.getTime()-dDateToday.getTime();
-                    String restOfDay= String.valueOf(Math.toIntExact((differenceDay / (1000 * 60 * 60 * 24))));
+                        long differenceDay = dDateSelected.getTime() - dDateToday.getTime();
+                        String restOfDay = String.valueOf(Math.abs((differenceDay / (1000 * 60 * 60 * 24))));
 
-                    String restOfHour= String.valueOf(Math.abs(dDateSelected.getHours()-dDateToday.getHours()));
-                    String restOfMinute= String.valueOf(Math.abs(dDateSelected.getMinutes()-dDateToday.getMinutes()));
+                        String restOfHour = String.valueOf(Math.abs(dDateSelected.getHours() - dDateToday.getHours()));
+                        String restOfMinute = String.valueOf(Math.abs(dDateSelected.getMinutes() - dDateToday.getMinutes()));
 
-                    tvDay.setText(restOfDay+" DAY");
-                    tvHours.setText(restOfHour+" HOUR");
-                    tvMinute.setText(restOfMinute+" MINUTE0");
+                        tvDay.setText(restOfDay + " DAY");
+                        tvHours.setText(restOfHour + " HOUR");
+                        tvMinute.setText(restOfMinute + " MINUTE");
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
+        }else {
+            login();
+        }
     }
 
 
     private void layout() {
         tvNameMr=findViewById(R.id.tvNameMr);
         tvNameMme=findViewById(R.id.tvNameMme);
-        tvDateHebrew=findViewById(R.id.tvDateHebrew);
         tvDateFrench=findViewById(R.id.tvDateFrench);
         tvDay=findViewById(R.id.tvDay);
         tvHours=findViewById(R.id.tvHours);
@@ -275,17 +381,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.other) {
             Intent intent = new Intent(getApplicationContext(),OtherActivity.class);
             startActivity(intent);
-
-        } else if (id == R.id.invite) {
-
-        } else if (id == R.id.table) {
-
         } else if (id == R.id.list) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.disconect) {
+            goOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

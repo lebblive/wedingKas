@@ -15,7 +15,7 @@
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/foto_root"
+        android:id="@+id/contact_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
@@ -29,68 +29,69 @@
 
 
         <TextView
-            android:id="@+id/tvNameF"
+            android:id="@+id/tvFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:hint="name"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/etPhoneF"
+            app:layout_constraintBottom_toTopOf="@+id/tvFamilyName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/etPhoneF"
+            android:id="@+id/tvFamilyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etAdressF"
+            app:layout_constraintBottom_toTopOf="@+id/tvPhoneContact"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvFirstName" />
 
         <TextView
-            android:id="@+id/etAdressF"
+            android:id="@+id/tvPhoneContact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etMailF"
+            app:layout_constraintBottom_toTopOf="@+id/tvSexe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPhoneF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvFamilyName" />
 
         <TextView
-            android:id="@+id/etMailF"
+            android:id="@+id/tvSexe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etPriceF"
+            app:layout_constraintBottom_toTopOf="@+id/tvAge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etAdressF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPhoneContact" />
 
         <TextView
-            android:id="@+id/etPriceF"
+            android:id="@+id/tvAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etNoteF"
+            app:layout_constraintBottom_toTopOf="@+id/tvNoteContact"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etMailF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSexe" />
 
         <TextView
-            android:id="@+id/etNoteF"
+            android:id="@+id/tvNoteContact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="#000000"
@@ -98,7 +99,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btnDelete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPriceF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
 
         <Button
@@ -111,7 +112,7 @@
             android:background="@drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etNoteF" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNoteContact" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

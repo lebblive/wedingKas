@@ -5,18 +5,14 @@ https://medium.com/android-grid/how-to-use-firebaserecycleradpater-with-latest-f
  */
 
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.Intent.getIntent;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 
 public class AddFotoFragment extends AppCompatDialogFragment {
@@ -41,8 +39,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
     Button btnSaveF;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    DatabaseReference blabla =FirebaseDatabase.getInstance().getReference()
-            .child("users").child(uid);
+
 
     public AddFotoFragment() {
         // Required empty public constructor
