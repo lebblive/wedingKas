@@ -45,7 +45,6 @@ public class AddContactFragment extends AppCompatDialogFragment {
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
     public AddContactFragment() {
         // Required empty public constructor
     }
@@ -118,6 +117,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
     private void selectedSexeMan() {
         tvMan.setTextColor(0xFF03A9F4);
         tvWoman.setTextColor(Color.BLACK);
+
     }
     private void selectedSexeWoman() {
         tvWoman.setTextColor(0xFF03A9F4);
@@ -144,6 +144,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
             //select sex
             if (tvMan.getCurrentTextColor()==0xFF03A9F4){
                 mapContact.put("sexe",tvMan.getText().toString());
+
             }if (tvWoman.getCurrentTextColor()==0xFF03A9F4){
                 mapContact.put("sexe",tvWoman.getText().toString());
             }if (tvMan.getCurrentTextColor()==Color.BLACK && tvWoman.getCurrentTextColor()==Color.BLACK ){

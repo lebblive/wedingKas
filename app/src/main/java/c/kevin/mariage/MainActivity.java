@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity
     TextView tvHours;
     TextView tvMinute;
     Button btnChange;
+    TextView tvResume;
+    ImageView ivPhoto;
+    ImageView ivMusic;
+    ImageView ivPlace;
+    ImageView ivContact;
+    ImageView ivOther;
 
     Calendar c=Calendar.getInstance();
 
@@ -55,6 +63,8 @@ public class MainActivity extends AppCompatActivity
     int currentDay=c.get(Calendar.DAY_OF_MONTH);
     int currentHour=c.get(Calendar.HOUR_OF_DAY);
     int currentMinute=c.get(Calendar.MINUTE);
+
+
      int name=0;
      int man=0;
     int woman=0;
@@ -80,11 +90,36 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         login();
         layout();
         btnChange.setOnClickListener(v -> {
             ProfilFragment profilFragment =new ProfilFragment();
             profilFragment.show(getSupportFragmentManager(),"ProfilFragment");
+        });
+        tvResume.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);
+            startActivity(intent);
+        });
+        ivPhoto.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),FotoActivity.class);
+            startActivity(intent);
+        });
+        ivMusic.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),MusicActivity.class);
+            startActivity(intent);
+        });
+        ivPlace.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
+            startActivity(intent);
+        });
+        ivContact.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);
+            startActivity(intent);
+        });
+        ivOther.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),OtherActivity.class);
+            startActivity(intent);
         });
 
         fetch();
@@ -93,96 +128,116 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getNumberPerson() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-        if (FirebaseDatabase.getInstance().getReference()
-                .child("users").child(uid).child("contact") != null) {
-
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             DatabaseReference dbRangerContact = FirebaseDatabase.getInstance().getReference()
                     .child("users").child(uid).child("contact");
 
-
             dbRangerContact.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                // va chercher dans la db tout les contact et recuper moi leur enfant
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     ArrayList arrayList=new ArrayList();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    for (Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator(); iterator.hasNext(); ) {
+                        DataSnapshot snapshot = iterator.next();
                         String pushKey = snapshot.getKey();
                         arrayList.add(pushKey);
-
                     }
-//                    System.out.println(arrayList);
-//                    System.out.println("size "+arrayList.size());
-//                    System.out.println("1 "+arrayList.get(1).toString());
-                    for (int i=0;i<arrayList.size();i++){
-                        String idC= (String) arrayList.get(i);
-//                        System.out.println(idC);
-                        DatabaseReference dbNumber=FirebaseDatabase.getInstance().getReference()
-                                .child("users").child(uid).child("contact").child(idC);
-                        dbNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-
-                                String dsFirstName = (String) dataSnapshot.child("firstName").getValue();
-                                String dsFamilyName = (String) dataSnapshot.child("familyName").getValue();
-                                String dsPhone = (String) dataSnapshot.child("phone").getValue();
-
-                                String dsSexe = (String) dataSnapshot.child("sexe").getValue();
-                                String dsAge = (String) dataSnapshot.child("age").getValue();
-
-                                String dsNoteContact = (String) dataSnapshot.child("noteContact").getValue();
-
-                                if (dsFirstName.length()!=0 || dsFamilyName.length()!=0){
-                                    name++;
-
-                                }else {
-                                    System.out.println("777");
-                                }
-                                if (dsSexe.equals("Man")){
-                                    man ++;
-                                }else if (dsSexe.equals("woman")){
-                                    woman ++;
-                                }
-
-                                /*
-                                TODO : continuer le conteur 
-                                 */
-//
-//                                System.out.println("3 "+dsFirstName);
-//                                System.out.println("4 "+dsFamilyName);
-//                                System.out.println("5 "+dsPhone);
-//                                System.out.println("6 "+dsSexe);
-//                                System.out.println("7 "+dsAge);
-//                                System.out.println("8 "+dsNoteContact);
-                            }
-
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                    }
+                    getIdContact(arrayList);
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
+                //fin de la recuperation
+
+                //recupere le nom de chaque id de la list contact
+                private void getIdContact(ArrayList arrayList) {
+                    String idC=new String();
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        idC = (String) arrayList.get(i);
+
+                        //rentre dans la liste des contact et recuper toute les info
+                        DatabaseReference dbNumber = FirebaseDatabase.getInstance().getReference()
+                                .child("users").child(uid).child("contact").child(idC);
+
+
+                        dbNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                String dsSexe = (String) dataSnapshot.child("sexe").getValue();
+                                String dsAge = (String) dataSnapshot.child("age").getValue();
+
+                                //je comence ici
+                                if (dsSexe.equals("Man")) {
+                                    man++;
+                                }
+                                if (dsSexe.equals("woman")){
+                                    woman++;
+                                }
+                                if (dsAge.equals("old Person")){
+                                    old++;
+                                }
+                                if (dsAge.equals("adult Person")){
+                                    adult++;
+                                }
+                                if (dsAge.equals("young Person")){
+                                    young++;
+                                }
+
+                                String resume="nombre de persone " + arrayList.size()+ " : ";
+
+                                if (man!=0){
+                                    resume=resume+ "\n"+String.valueOf(man)+" man ";
+                                }
+                                if (woman!=0){
+                                    resume=resume+"\n"+
+                                            String.valueOf(woman)+" woman ";
+                                }
+                                if (old!=0){
+                                    resume=resume+"\n"+
+                                            String.valueOf(old)+" old person ";
+                                }
+                                if (adult!=0){
+                                    resume=resume+"\n"+
+                                            String.valueOf(adult)+" adult person ";
+                                }
+                                if (young!=0){
+                                    resume=resume+"\n"+
+                                        String.valueOf(young)+" young person ";
+                                }
+
+                                tvResume.setText(resume);
+
+
+                            }//fin du ondatachange
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });// fin de la recuperation
+
+
+
+
+                    }//fin du for
+
+
+                }//fin de la methode getidContact
             });
 
-            System.out.println("name "+ name);
-            System.out.println("man " +man);
-            System.out.println("woman " +woman);
         }else {
-            System.out.println("coucouc");
+            login();
         }
     }
+
+
 
     //get profile from data base
     private void fetch() {
@@ -280,6 +335,14 @@ public class MainActivity extends AppCompatActivity
         tvHours=findViewById(R.id.tvHours);
         tvMinute=findViewById(R.id.tvMinute);
         btnChange=findViewById(R.id.btnChange);
+        tvResume=findViewById(R.id.tvResume);
+        ivPhoto=findViewById(R.id.ivPhoto);
+        ivMusic=findViewById(R.id.ivMusic);
+        ivPlace=findViewById(R.id.ivPlace);
+        ivContact=findViewById(R.id.ivContact);
+        ivOther=findViewById(R.id.ivOther);
+
+
     }
 
     @Override
