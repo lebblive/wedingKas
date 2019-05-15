@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView ivPlace;
     private ImageView ivContact;
     private ImageView ivOther;
+    private TextView tvSetProfil;
 
     Calendar c=Calendar.getInstance();
 
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -253,22 +252,24 @@ public class MainActivity extends AppCompatActivity
                             tvNameMr.setText(nameMr);
                             YoYo.with(Techniques.DropOut).playOn(tvNameMr);
                         }else {
-                            tvNameMr.setText(getString(R.string.set_your_profil));
+                            tvNameMr.setText("");
                         }
                         if (dataSnapshot.child("nameMme").getValue() != null) {
                             String nameMme = dataSnapshot.child("nameMme").getValue().toString();
                             tvNameMme.setText(nameMme);
                             YoYo.with(Techniques.DropOut).playOn(tvNameMme);
                         }else {
-                            tvNameMme.setText(getString(R.string.set_your_profil));
+                            tvNameMme.setText("");
                         }
                         if (dataSnapshot.child("date").getValue() != null) {
                             String date = dataSnapshot.child("date").getValue().toString();
                             tvDateFrench.setText(date);
                             YoYo.with(Techniques.Landing).playOn(tvDateFrench);
                         }else {
-                            tvDateFrench.setText(getString(R.string.set_your_profil));
+                            tvDateFrench.setText("");
                         }
+                    }else {
+                        tvSetProfil.setText("");
                     }
                 }
 
@@ -332,18 +333,8 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         }
-//        setYourProfil();
     }
 
-    private void setYourProfil() {
-        tvNameMr.setText(getString(R.string.set_your_profil));
-        tvNameMme.setText(getString(R.string.set_your_profil));
-        tvDateFrench.setText(getString(R.string.set_your_profil));
-        tvDay.setText(getString(R.string.set_your_profil));
-        tvHours.setText(getString(R.string.set_your_profil));
-        tvMinute.setText(getString(R.string.set_your_profil));
-        tvResume.setText("");
-    }
 
 
     private void layout() {
@@ -360,12 +351,7 @@ public class MainActivity extends AppCompatActivity
         ivPlace=findViewById(R.id.ivPlace);
         ivContact=findViewById(R.id.ivContact);
         ivOther=findViewById(R.id.ivOther);
-//        tvPhoto=findViewById(R.id.tvPhoto);
-//        tvMusic=findViewById(R.id.tvMusic);
-//        tvPlace=findViewById(R.id.tvPlace);
-//        tvOther=findViewById(R.id.tvOther);
-
-
+        tvSetProfil=findViewById(R.id.tvSetProfil);
 
     }
 
