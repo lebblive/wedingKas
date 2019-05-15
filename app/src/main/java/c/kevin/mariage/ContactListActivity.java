@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,14 +28,12 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class ContactListActivity extends AppCompatActivity {
 
-    private Button btnAddC;
     private RecyclerView rvContact;
     private Button btnBack;
-    private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
 
 
-    String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     Query query= FirebaseDatabase.getInstance()
             .getReference().child("users").child(uid).child("contact");
 
@@ -41,9 +41,9 @@ public class ContactListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        btnAddC=findViewById(R.id.btnAddC);
+        Button btnAddC = findViewById(R.id.btnAddC);
         rvContact=findViewById(R.id.rvContact);
         btnBack=findViewById(R.id.btnBack);
 
@@ -69,16 +69,16 @@ public class ContactListActivity extends AppCompatActivity {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout contact_root;
-        public TextView tvFirstName;
-        public TextView tvFamilyName;
-        public TextView tvPhoneContact;
-        public TextView tvSexe;
-        public TextView tvAge;
-        public TextView tvNoteContact;
+        ConstraintLayout contact_root;
+        TextView tvFirstName;
+        TextView tvFamilyName;
+        TextView tvPhoneContact;
+        TextView tvSexe;
+        TextView tvAge;
+        TextView tvNoteContact;
         public Button btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             contact_root=itemView.findViewById(R.id.contact_root);
             tvFirstName=itemView.findViewById(R.id.tvFirstName);
@@ -90,22 +90,22 @@ public class ContactListActivity extends AppCompatActivity {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvFirstName(String tvFirstNames){
+        void setTvFirstName(String tvFirstNames){
             tvFirstName.setText(tvFirstNames);
         }
-        public void setTvFamilyName(String tvFamilyNames){
+        void setTvFamilyName(String tvFamilyNames){
             tvFamilyName.setText(tvFamilyNames);
         }
-        public void setTvPhoneContact(String tvPhoneContacts){
+        void setTvPhoneContact(String tvPhoneContacts){
             tvPhoneContact.setText(tvPhoneContacts);
         }
-        public void setTvSexe(String tvSexes) {
+        void setTvSexe(String tvSexes) {
             tvSexe.setText(tvSexes);
         }
-        public void setTvAge(String tvAges){
+        void setTvAge(String tvAges){
             tvAge.setText(tvAges);
         }
-        public void setTvNoteContact(String tvNoteContacts){
+        void setTvNoteContact(String tvNoteContacts){
                 tvNoteContact.setText(tvNoteContacts);
         }
     }
@@ -114,13 +114,13 @@ public class ContactListActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Contact> options=
                 new FirebaseRecyclerOptions.Builder<Contact>().setQuery(query, snapshot -> new Contact(
-                        snapshot.child("id").getKey().toString(),
-                        snapshot.child("firstName").getValue().toString(),
-                        snapshot.child("familyName").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("sexe").getValue().toString(),
-                        snapshot.child("age").getValue().toString(),
-                        snapshot.child("noteContact").getValue().toString())).build();
+                        snapshot.child("id").getKey(),
+                        Objects.requireNonNull(snapshot.child("firstName").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("familyName").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("sexe").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("age").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("noteContact").getValue()).toString())).build();
 
         adapter = new FirebaseRecyclerAdapter<Contact, ContactListActivity.ViewHolder>(options) {
 
@@ -145,8 +145,8 @@ public class ContactListActivity extends AppCompatActivity {
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String cidFirst=contact.getFirstName().toString();
-                    String cidFamily=contact.getFamilyName().toString();
+                    String cidFirst= contact.getFirstName();
+                    String cidFamily= contact.getFamilyName();
                     String cid=cidFirst+cidFamily;
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("contact").child(cid);
@@ -155,12 +155,9 @@ public class ContactListActivity extends AppCompatActivity {
 
                 //si je click dessu
                 viewHolder.contact_root.setOnClickListener(v -> {
-                    String cidFirst=contact.getFirstName().toString();
-                    String cidFamily=contact.getFamilyName().toString();
+                    String cidFirst= contact.getFirstName();
+                    String cidFamily= contact.getFamilyName();
                     String cid=cidFirst+cidFamily;
-
-                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("contact").child(cid);
 
                     AddContactFragment addContactFragment=new AddContactFragment();
 
@@ -173,16 +170,7 @@ public class ContactListActivity extends AppCompatActivity {
                     bundle.putString("cid",cid);
                     addContactFragment.setArguments(bundle);
 
-
                     addContactFragment.show(getSupportFragmentManager(),"AddContactFragment");
-
-                    //stam pour le kif dune methode en plus a suprimer
-//                    Random r=new Random();
-//                    int c= Color.rgb(r.nextInt(256),r.nextInt(256),r.nextInt(256));
-//
-//                    viewHolder.foto_root.setBackgroundColor(c);
-
-//                    Toast.makeText(FotoActivity.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
                 });
             }
         };
@@ -193,8 +181,8 @@ public class ContactListActivity extends AppCompatActivity {
     private void viewRecyclerViewContact() {
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvContact.setItemAnimator(animator);
-        rvContact.getItemAnimator().setAddDuration(1000);
-        linearLayoutManager=new LinearLayoutManager(this);
+        Objects.requireNonNull(rvContact.getItemAnimator()).setAddDuration(1000);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvContact.setLayoutManager(linearLayoutManager);
         rvContact.setHasFixedSize(true);
     }

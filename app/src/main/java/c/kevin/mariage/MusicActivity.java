@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,12 +29,10 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class MusicActivity extends AppCompatActivity  {
 
-    private Button btnAddM;
     private RecyclerView rvMusic;
-    private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     Query query= FirebaseDatabase.getInstance()
             .getReference().child("users").child(uid).child("music");
 
@@ -39,10 +40,10 @@ public class MusicActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
 
-        btnAddM =findViewById(R.id.btnAddM);
+        Button btnAddM = findViewById(R.id.btnAddM);
         rvMusic=findViewById(R.id.rvMusic);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
@@ -76,7 +77,7 @@ public class MusicActivity extends AppCompatActivity  {
         TextView tvPriceM;
         public Button btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             music_root=itemView.findViewById(R.id.music_root);
             tvNameM=itemView.findViewById(R.id.tvNameM);
@@ -88,22 +89,23 @@ public class MusicActivity extends AppCompatActivity  {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameM(String tvNameMs){
+        void setTvNameM(String tvNameMs){
             tvNameM.setText(tvNameMs);
         }
-        public void setTvPhoneM(String tvPhoneMs){
+        void setTvPhoneM(String tvPhoneMs){
             tvPhoneM.setText(tvPhoneMs);
         }
-        public void setTvAdressM(String tvAdressMs){
+        void setTvAdressM(String tvAdressMs){
             tvAdressM.setText(tvAdressMs);
         }
-        public void setTvMailM(String tvMailMs) {
+        void setTvMailM(String tvMailMs) {
             tvMailM.setText(tvMailMs);
         }
-        public void setTvNoteM(String tvNoteMs){
+        void setTvNoteM(String tvNoteMs){
             tvNoteM.setText(tvNoteMs);
         }
-        public void setTvPriceM(String tvPriceMs){
+        @SuppressLint("SetTextI18n")
+        void setTvPriceM(String tvPriceMs){
             if (tvPriceMs.length()!=0) {
                 tvPriceM.setText(tvPriceMs + getString(R.string.money));
             }
@@ -115,12 +117,12 @@ public class MusicActivity extends AppCompatActivity  {
         FirebaseRecyclerOptions<Music> options=
                 new FirebaseRecyclerOptions.Builder<Music>().setQuery(query, snapshot -> new Music(
                         snapshot.child("id").getKey(),
-                        snapshot.child("name").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("adress").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        snapshot.child("note").getValue().toString(),
-                        snapshot.child("price").getValue().toString())).build();
+                        Objects.requireNonNull(snapshot.child("name").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("adress").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("email").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("note").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("price").getValue()).toString())).build();
 
         adapter = new FirebaseRecyclerAdapter<Music, MusicActivity.ViewHolder>(options) {
 
@@ -144,7 +146,7 @@ public class MusicActivity extends AppCompatActivity  {
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String mid=music.getNameM().toString();
+                    String mid= music.getNameM();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("music").child(mid);
                     databaseReference.removeValue();
@@ -153,8 +155,6 @@ public class MusicActivity extends AppCompatActivity  {
                 viewHolder.music_root.setOnClickListener(v -> {
 
                     String mid= music.getNameM();
-                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("music").child(mid);
 
                     AddMusicFragment addMusicFragment=new AddMusicFragment();
                     Bundle bundle=new Bundle();
@@ -170,8 +170,8 @@ public class MusicActivity extends AppCompatActivity  {
     private void viewRecyclerViewMusic() {
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvMusic.setItemAnimator(animator);
-        rvMusic.getItemAnimator().setAddDuration(1500);
-        linearLayoutManager=new LinearLayoutManager(this);
+        Objects.requireNonNull(rvMusic.getItemAnimator()).setAddDuration(1500);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvMusic.setLayoutManager(linearLayoutManager);
         rvMusic.setHasFixedSize(true);
     }

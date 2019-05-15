@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +41,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
     private EditText etNoteContact;
     private Button btnSaveContact;
 
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
     public AddContactFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_contact, container, false);
@@ -67,28 +68,17 @@ public class AddContactFragment extends AppCompatDialogFragment {
         layout(view);
         //get info on contactActivity
 
-        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+        assert this.getArguments() != null;
+        if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
         }
 
-        btnSaveContact.setOnClickListener(v -> {
-            setInfoFoto();
-        });
-        tvMan.setOnClickListener(v -> {
-            selectedSexeMan();
-        });
-        tvWoman.setOnClickListener(v -> {
-            selectedSexeWoman();
-        });
-        tvOldPerson.setOnClickListener(v -> {
-            selectedAgeOldPerson();
-        });
-        tvAdultPerson.setOnClickListener(v -> {
-            selectedAgeAdultPerson();
-        });
-        tvYoungPerson.setOnClickListener(v -> {
-            selectedAgeYoungPerson();
-        });
+        btnSaveContact.setOnClickListener(v -> setInfoFoto());
+        tvMan.setOnClickListener(v -> selectedSexeMan());
+        tvWoman.setOnClickListener(v -> selectedSexeWoman());
+        tvOldPerson.setOnClickListener(v -> selectedAgeOldPerson());
+        tvAdultPerson.setOnClickListener(v -> selectedAgeAdultPerson());
+        tvYoungPerson.setOnClickListener(v -> selectedAgeYoungPerson());
     }
 
 
@@ -136,7 +126,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
 
     }
 
-    public void setInfoFoto() {
+    private void setInfoFoto() {
         String cidFirst=etFirstName.getText().toString();
         String cidFamily=etFamilyName.getText().toString();
         String cid=cidFirst+cidFamily;
@@ -148,7 +138,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contact").child(cid);
             Map<String,Object> mapContact=new HashMap<>();
 
-            mapContact.put("id",databaseReference.getKey());
+            mapContact.put("id", Objects.requireNonNull(databaseReference.getKey()));
             mapContact.put("firstName",etFirstName.getText().toString());
             mapContact.put("familyName",etFamilyName.getText().toString());
             mapContact.put("phone",etPhoneNumber.getText().toString());
@@ -188,8 +178,10 @@ public class AddContactFragment extends AppCompatDialogFragment {
 
     private void getInfo() {
 
+        assert this.getArguments() != null;
         String idC = this.getArguments().getString("cid");
 
+        assert idC != null;
         DatabaseReference dbContact = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(uid).child("contact").child(idC);
         dbContact.addListenerForSingleValueEvent(new ValueEventListener() {

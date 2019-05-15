@@ -1,5 +1,7 @@
 package c.kevin.mariage;
 
+import androidx.annotation.NonNull;
+
 public class Other {
     private String idO;
     private String nameO;
@@ -9,11 +11,7 @@ public class Other {
     private String noteO;
     private String priceO;
 
-    public Other(){
-
-    }
-
-    public Other(String idO, String nameO, String phoneO, String adressO, String emailO, String noteO, String priceO) {
+    Other(String idO, String nameO, String phoneO, String adressO, String emailO, String noteO, String priceO) {
         this.idO = idO;
         this.nameO = nameO;
         this.phoneO = phoneO;
@@ -23,9 +21,6 @@ public class Other {
         this.priceO = priceO;
     }
 
-    public String getIdO() {
-        return idO;
-    }
     String getNameO() {
         return nameO;
     }
@@ -47,6 +42,7 @@ public class Other {
 
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Other{" +

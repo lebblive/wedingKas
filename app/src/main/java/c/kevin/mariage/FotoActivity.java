@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,12 +29,10 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class FotoActivity extends AppCompatActivity {
 
-    private Button btnAddF;
     private RecyclerView rvFoto;
-    private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     Query query= FirebaseDatabase.getInstance()
             .getReference().child("users").child(uid).child("foto");
 
@@ -41,10 +42,10 @@ public class FotoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_foto);
         //enlever la barre du haut
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
 
-        btnAddF =findViewById(R.id.btnAddF);
+        Button btnAddF = findViewById(R.id.btnAddF);
         rvFoto=findViewById(R.id.rvFoto);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
@@ -71,16 +72,16 @@ public class FotoActivity extends AppCompatActivity {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout foto_root;
-        public TextView tvNameF;
-        public TextView tvPhoneF;
-        public TextView tvAdressF;
-        public TextView tvMailF;
-        public TextView tvNoteF;
-        public TextView tvPriceF;
+        ConstraintLayout foto_root;
+        TextView tvNameF;
+        TextView tvPhoneF;
+        TextView tvAdressF;
+        TextView tvMailF;
+        TextView tvNoteF;
+        TextView tvPriceF;
         public Button btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             foto_root=itemView.findViewById(R.id.foto_root);
             tvNameF=itemView.findViewById(R.id.tvNameF);
@@ -92,20 +93,21 @@ public class FotoActivity extends AppCompatActivity {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameF(String tvNameFs){tvNameF.setText(tvNameFs);}
-        public void setTvPhoneF(String tvPhoneFs){
+        void setTvNameF(String tvNameFs){tvNameF.setText(tvNameFs);}
+        void setTvPhoneF(String tvPhoneFs){
                 tvPhoneF.setText(tvPhoneFs);
         }
-        public void setTvAdressF(String tvAdressFs){
+        void setTvAdressF(String tvAdressFs){
             tvAdressF.setText(tvAdressFs);
         }
-        public void setTvMailF(String tvMailFs) {
+        void setTvMailF(String tvMailFs) {
             tvMailF.setText(tvMailFs);
         }
-        public void setTvNoteF(String tvNoteFs){
+        void setTvNoteF(String tvNoteFs){
             tvNoteF.setText(tvNoteFs);
         }
-        public void setTvPriceF(String tvPriceFs){
+        @SuppressLint("SetTextI18n")
+        void setTvPriceF(String tvPriceFs){
             if (tvPriceFs.length()!=0) {
                 tvPriceF.setText(tvPriceFs + getString(R.string.money));
             }
@@ -119,13 +121,13 @@ public class FotoActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Foto> options=
                 new FirebaseRecyclerOptions.Builder<Foto>().setQuery(query, snapshot -> new Foto(
-                snapshot.child("id").getKey().toString(),
-                snapshot.child("name").getValue().toString(),
-                snapshot.child("phone").getValue().toString(),
-                snapshot.child("adress").getValue().toString(),
-                snapshot.child("email").getValue().toString(),
-                snapshot.child("note").getValue().toString(),
-                snapshot.child("price").getValue().toString())).build();
+                        snapshot.child("id").getKey(),
+                Objects.requireNonNull(snapshot.child("name").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("adress").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("email").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("note").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("price").getValue()).toString())).build();
 
         adapter = new FirebaseRecyclerAdapter<Foto, FotoActivity.ViewHolder>(options) {
 
@@ -149,7 +151,7 @@ public class FotoActivity extends AppCompatActivity {
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String fid=foto.getNameF().toString();
+                    String fid= foto.getNameF();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("foto").child(fid);
 
@@ -165,8 +167,6 @@ public class FotoActivity extends AppCompatActivity {
                 viewHolder.foto_root.setOnClickListener(v -> {
 
                     String fid=foto.getNameF();
-                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("foto").child(fid);
 
                     AddFotoFragment addFotoFragment=new AddFotoFragment();
                     /*
@@ -190,8 +190,8 @@ public class FotoActivity extends AppCompatActivity {
         //animation betwen rv
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvFoto.setItemAnimator(animator);
-        rvFoto.getItemAnimator().setAddDuration(1000);
-        linearLayoutManager=new LinearLayoutManager(this);
+        Objects.requireNonNull(rvFoto.getItemAnimator()).setAddDuration(1000);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvFoto.setLayoutManager(linearLayoutManager);
         rvFoto.setHasFixedSize(true);
     }

@@ -1,10 +1,5 @@
 package c.kevin.mariage;
 
-/*
-https://medium.com/android-grid/how-to-use-firebaserecycleradpater-with-latest-firebase-dependencies-in-android-aff7a33adb8b
- */
-
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +34,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
     private EditText etPriceF;
     private Button btnSaveF;
 
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
 
     public AddFotoFragment() {
@@ -47,7 +43,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_foto, container, false);
@@ -68,12 +64,11 @@ public class AddFotoFragment extends AppCompatDialogFragment {
         layout(view);
         //get info on FotoActivity
 
-        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+        assert this.getArguments() != null;
+        if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
         }
-        btnSaveF.setOnClickListener(v -> {
-            setInfoFoto();
-        });
+        btnSaveF.setOnClickListener(v -> setInfoFoto());
     }
 
     /*
@@ -81,7 +76,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
      nous avons besoin de certaines données dans la base de données.
       Nous allons donc ajouter des données via cette méthode.
      */
-    public void setInfoFoto() {
+    private void setInfoFoto() {
 
         String idF=etNameF.getText().toString();
 
@@ -91,7 +86,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
                 FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("foto").child(idF);
         Map<String,Object> mapFoto=new HashMap<>();
 
-        mapFoto.put("id",databaseReference.getKey());
+        mapFoto.put("id", Objects.requireNonNull(databaseReference.getKey()));
         mapFoto.put("name",etNameF.getText().toString());
         mapFoto.put("phone",etPhoneF.getText().toString());
         mapFoto.put("adress",etAdressF.getText().toString());
@@ -116,9 +111,11 @@ public class AddFotoFragment extends AppCompatDialogFragment {
 
     private void getInfo() {
 
-            String idF = this.getArguments().getString("fid");
+        assert this.getArguments() != null;
+        String idF = this.getArguments().getString("fid");
 
-            DatabaseReference dbFoto = FirebaseDatabase.getInstance().getReference()
+        assert idF != null;
+        DatabaseReference dbFoto = FirebaseDatabase.getInstance().getReference()
                     .child("users").child(uid).child("foto").child(idF);
             dbFoto.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

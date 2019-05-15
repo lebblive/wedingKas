@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,12 +29,10 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class PlaceActivity extends AppCompatActivity  {
 
-    private Button btnAddP;
     private RecyclerView rvPlace;
-    private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     Query query= FirebaseDatabase.getInstance()
             .getReference().child("users").child(uid).child("place");
 
@@ -39,11 +40,10 @@ public class PlaceActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
 
-
-        btnAddP =findViewById(R.id.btnAddP);
+        Button btnAddP = findViewById(R.id.btnAddP);
         rvPlace=findViewById(R.id.rvPlace);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
@@ -67,16 +67,16 @@ public class PlaceActivity extends AppCompatActivity  {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout place_root;
-        public TextView tvNameP;
-        public TextView tvPhoneP;
-        public TextView tvAdressP;
-        public TextView tvMailP;
-        public TextView tvNoteP;
-        public TextView tvPriceP;
+        ConstraintLayout place_root;
+        TextView tvNameP;
+        TextView tvPhoneP;
+        TextView tvAdressP;
+        TextView tvMailP;
+        TextView tvNoteP;
+        TextView tvPriceP;
         public Button btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             place_root=itemView.findViewById(R.id.place_root);
             tvNameP=itemView.findViewById(R.id.tvNameP);
@@ -88,22 +88,23 @@ public class PlaceActivity extends AppCompatActivity  {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameP(String tvNamePs){
+        void setTvNameP(String tvNamePs){
             tvNameP.setText(tvNamePs);
         }
-        public void setTvPhoneP(String tvPhonePs){
+        void setTvPhoneP(String tvPhonePs){
             tvPhoneP.setText(tvPhonePs);
         }
-        public void setTvAdressP(String tvAdressPs){
+        void setTvAdressP(String tvAdressPs){
             tvAdressP.setText(tvAdressPs);
         }
-        public void setTvMailP(String tvMailPs) {
+        void setTvMailP(String tvMailPs) {
             tvMailP.setText(tvMailPs);
         }
-        public void setTvNoteP(String tvNotePs){
+        void setTvNoteP(String tvNotePs){
             tvNoteP.setText(tvNotePs);
         }
-        public void setTvPriceP(String tvPricePs){
+        @SuppressLint("SetTextI18n")
+        void setTvPriceP(String tvPricePs){
             if (tvPricePs.length()!=0) {
                 tvPriceP.setText(tvPricePs + getString(R.string.money));
             }
@@ -114,13 +115,13 @@ public class PlaceActivity extends AppCompatActivity  {
 
         FirebaseRecyclerOptions<Place> options=
                 new FirebaseRecyclerOptions.Builder<Place>().setQuery(query, snapshot -> new Place(
-                        snapshot.child("id").getKey().toString(),
-                        snapshot.child("name").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("adress").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        snapshot.child("note").getValue().toString(),
-                        snapshot.child("price").getValue().toString())).build();
+                        snapshot.child("id").getKey(),
+                        Objects.requireNonNull(snapshot.child("name").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("adress").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("email").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("note").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("price").getValue()).toString())).build();
 
         adapter = new FirebaseRecyclerAdapter<Place, PlaceActivity.ViewHolder>(options) {
 
@@ -144,16 +145,14 @@ public class PlaceActivity extends AppCompatActivity  {
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String pid=place.getNameP().toString();
+                    String pid= place.getNameP();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("place").child(pid);
                     databaseReference.removeValue();
                 });
 
                 viewHolder.place_root.setOnClickListener(v -> {
-                    String pid=place.getNameP().toString();
-                    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("place").child(pid);
+                    String pid= place.getNameP();
                     AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("pid",pid);
@@ -168,8 +167,8 @@ public class PlaceActivity extends AppCompatActivity  {
     private void viewRecyclerViewPlace() {
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvPlace.setItemAnimator(animator);
-        rvPlace.getItemAnimator().setAddDuration(1500);
-        linearLayoutManager=new LinearLayoutManager(this);
+        Objects.requireNonNull(rvPlace.getItemAnimator()).setAddDuration(1500);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvPlace.setLayoutManager(linearLayoutManager);
         rvPlace.setHasFixedSize(true);
     }

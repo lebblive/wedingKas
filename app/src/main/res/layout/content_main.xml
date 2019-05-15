@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/flower" />
+        app:srcCompat="@drawable/flower"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:id="@+id/tvNameMr"
@@ -274,15 +275,17 @@
 
     <TextView
         android:id="@+id/tvSetProfil"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:textAlignment="center"
         android:textColor="#000000"
-        android:text="@string/set_your_profil"
         app:layout_constraintBottom_toTopOf="@+id/ivPlace"
         app:layout_constraintEnd_toStartOf="@+id/btnChange"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMinute2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

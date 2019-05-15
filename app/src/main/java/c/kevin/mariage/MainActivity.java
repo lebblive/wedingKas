@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         login();
@@ -139,9 +139,8 @@ public class MainActivity extends AppCompatActivity
                 // va chercher dans la db tout les contact et recuper moi leur enfant
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ArrayList arrayList=new ArrayList();
-                    for (Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator(); iterator.hasNext(); ) {
-                        DataSnapshot snapshot = iterator.next();
+                    ArrayList<String> arrayList= new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String pushKey = snapshot.getKey();
                         arrayList.add(pushKey);
                     }
@@ -155,10 +154,10 @@ public class MainActivity extends AppCompatActivity
                 //fin de la recuperation
 
                 //recupere le nom de chaque id de la list contact
-                private void getIdContact(ArrayList arrayList) {
-                    String idC=new String();
+                private void getIdContact(ArrayList<String> arrayList) {
+                    String idC;
                     for (int i = 0; i < arrayList.size(); i++) {
-                        idC = (String) arrayList.get(i);
+                        idC = arrayList.get(i);
 
                         //rentre dans la liste des contact et recuper toute les info
                         DatabaseReference dbNumber = FirebaseDatabase.getInstance().getReference()
@@ -173,19 +172,21 @@ public class MainActivity extends AppCompatActivity
                                 String dsAge = (String) dataSnapshot.child("age").getValue();
 
                                 //je comence ici
-                                if (dsSexe.equals("Man")) {
+                                assert dsSexe != null;
+                                if (dsSexe.equals(getString(R.string.man))) {
                                     man++;
                                 }
-                                if (dsSexe.equals("woman")){
+                                if (dsSexe.equals(getString(R.string.woman))){
                                     woman++;
                                 }
-                                if (dsAge.equals("old Person")){
+                                assert dsAge != null;
+                                if (dsAge.equals(getString(R.string.old_person))){
                                     old++;
                                 }
-                                if (dsAge.equals("adult Person")){
+                                if (dsAge.equals(getString(R.string.adult_person))){
                                     adult++;
                                 }
-                                if (dsAge.equals("young Person")){
+                                if (dsAge.equals(getString(R.string.young_person))){
                                     young++;
                                 }
 
@@ -246,30 +247,31 @@ public class MainActivity extends AppCompatActivity
             dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot != null) {
-                        if (dataSnapshot.child("nameMr").getValue() != null) {
-                            String nameMr = dataSnapshot.child("nameMr").getValue().toString();
-                            tvNameMr.setText(nameMr);
-                            YoYo.with(Techniques.DropOut).playOn(tvNameMr);
-                        }else {
-                            tvNameMr.setText("");
-                        }
-                        if (dataSnapshot.child("nameMme").getValue() != null) {
-                            String nameMme = dataSnapshot.child("nameMme").getValue().toString();
-                            tvNameMme.setText(nameMme);
-                            YoYo.with(Techniques.DropOut).playOn(tvNameMme);
-                        }else {
-                            tvNameMme.setText("");
-                        }
-                        if (dataSnapshot.child("date").getValue() != null) {
-                            String date = dataSnapshot.child("date").getValue().toString();
-                            tvDateFrench.setText(date);
-                            YoYo.with(Techniques.Landing).playOn(tvDateFrench);
-                        }else {
-                            tvDateFrench.setText("");
-                        }
+                    if (dataSnapshot.child("nameMr").getValue() != null) {
+                        String nameMr = Objects.requireNonNull(dataSnapshot.child("nameMr").getValue()).toString();
+                        tvNameMr.setText(nameMr);
+                        YoYo.with(Techniques.DropOut).playOn(tvNameMr);
+
                     }else {
-                        tvSetProfil.setText("");
+                        tvNameMr.setText("");
+                        tvSetProfil.setText(getString(R.string.set_your_profil));
+                    }
+                    if (dataSnapshot.child("nameMme").getValue() != null) {
+                        String nameMme = Objects.requireNonNull(dataSnapshot.child("nameMme").getValue()).toString();
+                        tvNameMme.setText(nameMme);
+                        YoYo.with(Techniques.DropOut).playOn(tvNameMme);
+                    }else {
+                        tvNameMme.setText("");
+                        tvSetProfil.setText(getString(R.string.set_your_profil));
+
+                    }
+                    if (dataSnapshot.child("date").getValue() != null) {
+                        String date = Objects.requireNonNull(dataSnapshot.child("date").getValue()).toString();
+                        tvDateFrench.setText(date);
+                        YoYo.with(Techniques.Landing).playOn(tvDateFrench);
+                    }else {
+                        tvDateFrench.setText("");
+                        tvSetProfil.setText(getString(R.string.set_your_profil));
                     }
                 }
 
@@ -300,8 +302,7 @@ public class MainActivity extends AppCompatActivity
 
                     // set compte a rebour
 
-//                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
                     try {
                         Date dDateToday = simpleDateFormat.parse(dateToday);
@@ -371,7 +372,7 @@ public class MainActivity extends AppCompatActivity
             tout se quil y a dedans
              */
 
-            String dname=FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            String dname= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
             String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
             String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("users").child(uid);
@@ -379,11 +380,7 @@ public class MainActivity extends AppCompatActivity
             ValueEventListener valueEventListener=new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    User user = dataSnapshot.getValue(User.class);
-                    if (dataSnapshot.exists()){
-//                        String usid=user.getUid();
-//                        System.out.println(usid);
-                    }else {
+                    if (!dataSnapshot.exists()) {
                         databaseReference.setValue(new User(dname, email, uid));
                     }
                 }
@@ -401,7 +398,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -433,7 +430,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -460,7 +457,7 @@ public class MainActivity extends AppCompatActivity
             goOut();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -484,12 +481,7 @@ public class MainActivity extends AppCompatActivity
     }
     private void goOut(){
         AuthUI.getInstance().signOut(this).addOnSuccessListener(
-                new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        login();
-                    }
-                }
+                aVoid -> login()
         );
     }
 

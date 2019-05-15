@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +41,7 @@ public class ProfilFragment extends AppCompatDialogFragment {
     private CalendarView cvDate;
     private Button btnSaveD;
 
-    String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
 
     public ProfilFragment() {
@@ -49,7 +50,7 @@ public class ProfilFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
@@ -73,9 +74,7 @@ public class ProfilFragment extends AppCompatDialogFragment {
         setProfilDate();
 
 
-        btnSaveD.setOnClickListener(v -> {
-            saveD();
-        });
+        btnSaveD.setOnClickListener(v -> saveD());
     }
 
     // if profil exist get value

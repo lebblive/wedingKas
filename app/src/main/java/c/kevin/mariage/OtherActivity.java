@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,12 +29,10 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class OtherActivity extends AppCompatActivity {
 
-    private Button btnAddO;
     private RecyclerView rvOther;
-    private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     private Button btnBack;
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     Query query= FirebaseDatabase.getInstance()
             .getReference().child("users").child(uid).child("other");
 
@@ -39,10 +40,10 @@ public class OtherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
 
-        btnAddO =findViewById(R.id.btnAddO);
+        Button btnAddO = findViewById(R.id.btnAddO);
         rvOther=findViewById(R.id.rvOther);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
@@ -101,6 +102,7 @@ public class OtherActivity extends AppCompatActivity {
         void setTvNoteO(String tvNoteOs){
             tvNoteO.setText(tvNoteOs);
         }
+        @SuppressLint("SetTextI18n")
         void setTvPriceO(String tvPriceOs){
             if (tvPriceOs.length()!=0) {
                 tvPriceO.setText(tvPriceOs + getString(R.string.money));
@@ -113,12 +115,12 @@ public class OtherActivity extends AppCompatActivity {
         FirebaseRecyclerOptions<Other> options=
                 new FirebaseRecyclerOptions.Builder<Other>().setQuery(query, snapshot -> new Other(
                         snapshot.child("id").getKey(),
-                        snapshot.child("name").getValue().toString(),
-                        snapshot.child("phone").getValue().toString(),
-                        snapshot.child("adress").getValue().toString(),
-                        snapshot.child("email").getValue().toString(),
-                        snapshot.child("note").getValue().toString(),
-                        snapshot.child("price").getValue().toString())).build();
+                        Objects.requireNonNull(snapshot.child("name").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("adress").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("email").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("note").getValue()).toString(),
+                        Objects.requireNonNull(snapshot.child("price").getValue()).toString())).build();
 
         adapter = new FirebaseRecyclerAdapter<Other, OtherActivity.ViewHolder>(options) {
 
@@ -142,7 +144,7 @@ public class OtherActivity extends AppCompatActivity {
 
 
                 viewHolder.btnDelete.setOnClickListener(v -> {
-                    String oid=other.getNameO().toString();
+                    String oid= other.getNameO();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("other").child(oid);
                     databaseReference.removeValue();
@@ -150,9 +152,7 @@ public class OtherActivity extends AppCompatActivity {
                 //si je click dessu
                 viewHolder.other_root.setOnClickListener(v -> {
 
-                    String oid=other.getNameO().toString();
-                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
-                            .child("users").child(uid).child("other").child(oid);
+                    String oid= other.getNameO();
 
                     AddOtherFragment addOtherFragment=new AddOtherFragment();
                     Bundle bundle=new Bundle();
@@ -169,8 +169,8 @@ public class OtherActivity extends AppCompatActivity {
     private void viewRecyclerViewOther() {
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvOther.setItemAnimator(animator);
-        rvOther.getItemAnimator().setAddDuration(1500);
-        linearLayoutManager=new LinearLayoutManager(this);
+        Objects.requireNonNull(rvOther.getItemAnimator()).setAddDuration(1500);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvOther.setLayoutManager(linearLayoutManager);
         rvOther.setHasFixedSize(true);
     }

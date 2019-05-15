@@ -11,8 +11,6 @@ public class Place {
     private String noteP;
     private String priceP;
 
-    public Place(){}
-
     Place(String idP, String nameP, String phoneP, String adressP, String emailP, String noteP, String priceP) {
         this.idP = idP;
         this.nameP = nameP;
@@ -23,9 +21,6 @@ public class Place {
         this.priceP = priceP;
     }
 
-    public String getIdP() {
-        return idP;
-    }
     String getNameP() {
         return nameP;
     }

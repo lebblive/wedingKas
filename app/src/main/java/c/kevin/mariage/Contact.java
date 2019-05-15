@@ -1,5 +1,7 @@
 package c.kevin.mariage;
 
+import androidx.annotation.NonNull;
+
 public class Contact {
 
     private String idC;
@@ -10,9 +12,8 @@ public class Contact {
     private String age;
     private String NoteContact;
 
-    public Contact(){}
 
-    public Contact(String idC, String firstName, String familyName, String phoneNumberContact, String sex, String age, String NoteContact) {
+    Contact(String idC, String firstName, String familyName, String phoneNumberContact, String sex, String age, String NoteContact) {
         this.idC = idC;
         this.firstName = firstName;
         this.familyName = familyName;
@@ -22,36 +23,33 @@ public class Contact {
         this.NoteContact=NoteContact;
     }
 
-    public String getIdC() {
-        return idC;
-    }
-
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
 
-    public String getFamilyName() {
+    String getFamilyName() {
         return familyName;
     }
 
-    public String getPhoneNumberContact() {
+    String getPhoneNumberContact() {
         return PhoneNumberContact;
     }
 
-    public String getSex() {
+    String getSex() {
         return sex;
     }
 
-    public String getAge() {
+    String getAge() {
         return age;
     }
 
-    public String getNoteContact() {
+    String getNoteContact() {
         return NoteContact;
     }
 
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Contact{" +

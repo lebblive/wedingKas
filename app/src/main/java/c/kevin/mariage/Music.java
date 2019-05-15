@@ -1,5 +1,7 @@
 package c.kevin.mariage;
 
+import androidx.annotation.NonNull;
+
 public class Music {
 
     private String idM;
@@ -10,9 +12,7 @@ public class Music {
     private String noteM;
     private String priceM;
 
-    public Music(){}
-
-    public Music(String idM, String nameM, String phoneM, String adressM, String emailM, String noteM, String priceM) {
+    Music(String idM, String nameM, String phoneM, String adressM, String emailM, String noteM, String priceM) {
         this.idM = idM;
         this.nameM = nameM;
         this.phoneM = phoneM;
@@ -22,30 +22,28 @@ public class Music {
         this.priceM = priceM;
     }
 
-    public String getIdM() {
-        return idM;
-    }
-    public String getNameM() {
+    String getNameM() {
         return nameM;
     }
-    public String getPhoneM() {
+    String getPhoneM() {
         return phoneM;
     }
-    public String getAdressM() {
+    String getAdressM() {
         return adressM;
     }
-    public String getEmailM() {
+    String getEmailM() {
         return emailM;
     }
-    public String getNoteM() {
+    String getNoteM() {
         return noteM;
     }
-    public String getPriceM() {
+    String getPriceM() {
         return priceM;
     }
 
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Music{" +

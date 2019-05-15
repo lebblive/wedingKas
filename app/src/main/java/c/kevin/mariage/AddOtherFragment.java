@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ public class AddOtherFragment extends AppCompatDialogFragment {
     private EditText etPriceO;
     private Button btnSaveO;
 
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
 
     public AddOtherFragment() {
@@ -47,7 +48,7 @@ public class AddOtherFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_other, container, false);
@@ -65,15 +66,14 @@ public class AddOtherFragment extends AppCompatDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
-        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+        assert this.getArguments() != null;
+        if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
         }
-        btnSaveO.setOnClickListener(v -> {
-            setInfoOther();
-        });
+        btnSaveO.setOnClickListener(v -> setInfoOther());
     }
 
-    public void setInfoOther() {
+    private void setInfoOther() {
 
         String idO=etNameO.getText().toString();
 
@@ -83,7 +83,7 @@ public class AddOtherFragment extends AppCompatDialogFragment {
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("other").child(idO);
             Map<String,Object> mapOther=new HashMap<>();
 
-            mapOther.put("id",databaseReference.getKey());
+            mapOther.put("id", Objects.requireNonNull(databaseReference.getKey()));
             mapOther.put("name",etNameO.getText().toString());
             mapOther.put("phone",etPhoneO.getText().toString());
             mapOther.put("adress",etAdressO.getText().toString());
@@ -99,8 +99,10 @@ public class AddOtherFragment extends AppCompatDialogFragment {
     }
 
     private void getInfo() {
+        assert this.getArguments() != null;
         String idO=this.getArguments().getString("oid");
 
+        assert idO != null;
         DatabaseReference dbOther = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(uid).child("other").child(idO);
         dbOther.addListenerForSingleValueEvent(new ValueEventListener() {

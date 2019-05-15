@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
     private EditText etPriceP;
     private Button btnSaveP;
 
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
 
     public AddPlaceFragment() {
@@ -47,7 +48,7 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_place, container, false);
@@ -64,16 +65,17 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
-        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+        assert this.getArguments() != null;
+        if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
         }
-        btnSaveP.setOnClickListener(v -> {
-            setInfoPlace();
-        });
+        btnSaveP.setOnClickListener(v -> setInfoPlace());
     }
     private void getInfo() {
+        assert this.getArguments() != null;
         String idP=this.getArguments().getString("pid");
 
+        assert idP != null;
         DatabaseReference dbFoto = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(uid).child("place").child(idP);
         dbFoto.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -120,7 +122,7 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
         });
     }
 
-    public void setInfoPlace() {
+    private void setInfoPlace() {
 
         String idP=etNameP.getText().toString();
 
@@ -130,7 +132,7 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("place").child(idP);
             Map<String,Object> mapPlace=new HashMap<>();
 
-            mapPlace.put("id",databaseReference.getKey());
+            mapPlace.put("id", Objects.requireNonNull(databaseReference.getKey()));
             mapPlace.put("name",etNameP.getText().toString());
             mapPlace.put("phone",etPhoneP.getText().toString());
             mapPlace.put("adress",etAdressP.getText().toString());

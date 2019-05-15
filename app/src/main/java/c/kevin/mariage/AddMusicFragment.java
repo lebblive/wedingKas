@@ -18,16 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AddMusicFragment extends AppCompatDialogFragment {
 
     private EditText etNameM;
@@ -38,7 +35,7 @@ public class AddMusicFragment extends AppCompatDialogFragment {
     private EditText etPriceM;
     private Button btnSaveM;
 
-    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
 
     public AddMusicFragment() {
@@ -47,7 +44,7 @@ public class AddMusicFragment extends AppCompatDialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_add_music, container, false);
@@ -62,8 +59,10 @@ public class AddMusicFragment extends AppCompatDialogFragment {
     }
 
     private void getInfo() {
+        assert this.getArguments() != null;
         String idM=this.getArguments().getString("mid");
 
+        assert idM != null;
         DatabaseReference dbMusic = FirebaseDatabase.getInstance().getReference()
                 .child("users").child(uid).child("music").child(idM);
         dbMusic.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,15 +113,14 @@ public class AddMusicFragment extends AppCompatDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layout(view);
-        if (this.getArguments().getString("autre")==this.getArguments().getString("add")) {
+        assert this.getArguments() != null;
+        if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
         }
-        btnSaveM.setOnClickListener(v -> {
-            setInfoMusic();
-        });
+        btnSaveM.setOnClickListener(v -> setInfoMusic());
     }
 
-    public void setInfoMusic() {
+    private void setInfoMusic() {
 
         String idM=etNameM.getText().toString();
 
@@ -132,7 +130,7 @@ public class AddMusicFragment extends AppCompatDialogFragment {
                     FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("music").child(idM);
             Map<String,Object> mapMusic=new HashMap<>();
 
-            mapMusic.put("id",databaseReference.getKey());
+            mapMusic.put("id", Objects.requireNonNull(databaseReference.getKey()));
             mapMusic.put("name",etNameM.getText().toString());
             mapMusic.put("phone",etPhoneM.getText().toString());
             mapMusic.put("adress",etAdressM.getText().toString());

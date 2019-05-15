@@ -1,5 +1,7 @@
 package c.kevin.mariage;
 
+import androidx.annotation.NonNull;
+
 public class Foto {
 
     private String idF;
@@ -10,12 +12,7 @@ public class Foto {
     private String noteF;
     private String priceF;
 
-    public Foto(){
-
-    }
-
-
-    public Foto(String idF, String nameF, String phoneF, String adressF, String emailF, String noteF ,String priceF) {
+    Foto(String idF, String nameF, String phoneF, String adressF, String emailF, String noteF, String priceF) {
         this.idF = idF;
         this.nameF = nameF;
         this.phoneF = phoneF;
@@ -25,29 +22,27 @@ public class Foto {
         this.priceF= priceF;
     }
 
-    public String getIdF() {
-        return idF;
-    }
-    public String getNameF() {
+    String getNameF() {
         return nameF;
     }
-    public String getPhoneF() {
+    String getPhoneF() {
         return phoneF;
     }
-    public String getAdressF() {
+    String getAdressF() {
         return adressF;
     }
-    public String getEmailF() {
+    String getEmailF() {
         return emailF;
     }
-    public String getNoteF() {
+    String getNoteF() {
         return noteF;
     }
-    public String getPriceF() {
+    String getPriceF() {
         return priceF;
     }
 
 
+    @NonNull
     @Override
     public String toString() {
         return "Foto{" +

@@ -1,7 +1,6 @@
 package c.kevin.mariage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import androidx.annotation.NonNull;
 
 public class User {
     String name;
@@ -9,12 +8,8 @@ public class User {
     String uid;
 
 
-    // ctor vide
-    public User() {
-    }
-
     //ctor
-    public User(String name, String email, String uid) {
+    User(String name, String email, String uid) {
         this.name = name;
         this.email = email;
         this.uid = uid;
@@ -43,6 +38,7 @@ public class User {
     }
 
     //toString
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
