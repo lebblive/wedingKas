@@ -2,13 +2,13 @@ package c.kevin.mariage;
 
 public class Foto {
 
-    public String idF;
-    public String nameF;
-    public String phoneF;
-    public String adressF;
-    public String emailF;
-    public String noteF;
-    public String priceF;
+    private String idF;
+    private String nameF;
+    private String phoneF;
+    private String adressF;
+    private String emailF;
+    private String noteF;
+    private String priceF;
 
     public Foto(){
 
@@ -47,27 +47,6 @@ public class Foto {
         return priceF;
     }
 
-    public void setIdF(String idF) {
-        this.idF = idF;
-    }
-    public void setNameF(String nameF) {
-        this.nameF = nameF;
-    }
-    public void setPhoneF(String phoneF) {
-        this.phoneF = phoneF;
-    }
-    public void setAdressF(String adressF) {
-        this.adressF = adressF;
-    }
-    public void setEmailF(String emailF) {
-        this.emailF = emailF;
-    }
-    public void setNoteF(String noteF) {
-        this.noteF = noteF;
-    }
-    public void setPriceF(String priceF) {
-        this.priceF = priceF;
-    }
 
     @Override
     public String toString() {

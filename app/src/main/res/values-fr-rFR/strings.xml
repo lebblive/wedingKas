@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wedding Kas</string>
+    <string name="guest">Liste d\'invité</string>
+    <string name="photographers">Photographe</string>
+    <string name="music">Musique</string>
+    <string name="other_service">Autre Fournisseur</string>
+    <string name="EventsRooms">Salle</string>
+    <string name="name">Nom</string>
+    <string name="set_your_profil">Identifiez vous</string>
+    <string name="date">Date</string>
+    <string name="days">Jours</string>
+    <string name="hours">Heures</string>
+    <string name="minutes">Minutes</string>
+    <string name="name_of_the_couple">Nom du Couple</string>
+    <string name="groom">Marié</string>
+    <string name="bride">Mariée</string>
+    <string name="your_date">Votre Date</string>
+    <string name="phone">Téléphone</string>
+    <string name="adress">Adresse</string>
+    <string name="email">Email</string>
+    <string name="price">Prix</string>
+    <string name="note">Note</string>
+    <string name="enter_first_name">Prénom</string>
+    <string name="enter_family_name">Nom</string>
+    <string name="man">Hommes</string>
+    <string name="woman">Femmes</string>
+    <string name="old_person">Personne Agés</string>
+    <string name="adult_person">Adultes</string>
+    <string name="young_person">Enfants</string>
+    <string name="enter_phone_number">Télephone</string>
+    <string name="money">€</string>
+    <string name="Persons_number">Nombres de Personne</string>
+</resources>

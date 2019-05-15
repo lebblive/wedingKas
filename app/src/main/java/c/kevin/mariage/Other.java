@@ -1,13 +1,13 @@
 package c.kevin.mariage;
 
 public class Other {
-    public String idO;
-    public String nameO;
-    public String phoneO;
-    public String adressO;
-    public String emailO;
-    public String noteO;
-    public String priceO;
+    private String idO;
+    private String nameO;
+    private String phoneO;
+    private String adressO;
+    private String emailO;
+    private String noteO;
+    private String priceO;
 
     public Other(){
 
@@ -26,46 +26,26 @@ public class Other {
     public String getIdO() {
         return idO;
     }
-    public String getNameO() {
+    String getNameO() {
         return nameO;
     }
-    public String getPhoneO() {
+    String getPhoneO() {
         return phoneO;
     }
-    public String getAdressO() {
+    String getAdressO() {
         return adressO;
     }
-    public String getEmailO() {
+    String getEmailO() {
         return emailO;
     }
-    public String getNoteO() {
+    String getNoteO() {
         return noteO;
     }
-    public String getPriceO() {
+    String getPriceO() {
         return priceO;
     }
 
-    public void setIdO(String idO) {
-        this.idO = idO;
-    }
-    public void setNameO(String nameO) {
-        this.nameO = nameO;
-    }
-    public void setPhoneO(String phoneO) {
-        this.phoneO = phoneO;
-    }
-    public void setAdressO(String adressO) {
-        this.adressO = adressO;
-    }
-    public void setEmailO(String emailO) {
-        this.emailO = emailO;
-    }
-    public void setNoteO(String noteO) {
-        this.noteO = noteO;
-    }
-    public void setPriceO(String priceO) {
-        this.priceO = priceO;
-    }
+
 
     @Override
     public String toString() {

@@ -13,95 +13,96 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="name"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/etPhoneF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etPhoneF"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="phone"
+        android:hint="@string/phone"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/etAdressF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNameF" />
+        app:layout_constraintTop_toBottomOf="@+id/etNameF"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etAdressF"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="adress"
+        android:hint="@string/adress"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/etMailF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPhoneF" />
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneF"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etMailF"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/etPriceF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAdressF" />
+        app:layout_constraintTop_toBottomOf="@+id/etAdressF"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etPriceF"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Price"
+        android:hint="@string/price"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/etNoteF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMailF" />
+        app:layout_constraintTop_toBottomOf="@+id/etMailF"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etNoteF"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Note"
+        android:hint="@string/note"
         android:inputType="textLongMessage"
         app:layout_constraintBottom_toTopOf="@+id/btnSaveF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPriceF" />
+        app:layout_constraintTop_toBottomOf="@+id/etPriceF"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <Button
         android:id="@+id/btnSaveF"
-        android:layout_width="41dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"

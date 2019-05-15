@@ -34,18 +34,13 @@ import androidx.fragment.app.Fragment;
  */
 public class ProfilFragment extends AppCompatDialogFragment {
 
-    EditText etNameMr;
-    EditText etNameMme;
-    TextView tvDate;
-    CalendarView cvDate;
-    Button btnSaveD;
+    private EditText etNameMr;
+    private EditText etNameMme;
+    private TextView tvDate;
+    private CalendarView cvDate;
+    private Button btnSaveD;
 
     String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-    public static final String EXTRA_NAMEMR="nameMr";
-    public static final String EXTRA_NAMEMME="nameMmme";
-    public static final String EXTRA_DATE="date";
-
 
 
     public ProfilFragment() {
@@ -118,29 +113,15 @@ public class ProfilFragment extends AppCompatDialogFragment {
     private void setProfilDate() {
 
         cvDate.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            int yearSelected = year;
             int monthSelected = month+1; // because 0=january
-            int dayOfMonthSelected = dayOfMonth;
-//            String date=year+"/"+monthSelected+"/"+dayOfMonth;
             String date=dayOfMonth+"/"+monthSelected+"/"+year;
 
-//            DatabaseReference databaseReference=
-//                    FirebaseDatabase.getInstance().getReference()
-//                    .child("users").child(uid).child("dateSelected");
-//            Map<String,Object> mapDate=new HashMap<>();
-//            mapDate.put("month",monthSelected);
-//            mapDate.put("dayOfMonth",dayOfMonthSelected);
-//            mapDate.put("date",date);
-//            databaseReference.setValue(mapDate);
-//            System.out.println("HashMap  : "+mapDate);
             tvDate.setText(date);
         });
     }
-    // Todo: changer les nom des classe pour profile et non date ...
-    // Todo : essayer de changer la date en hebreux soit par calcule soit sous ArrayList
-    // Todo : fair le compte a rebour.
 
     private void saveD() {
+        Intent intent=new Intent(getContext(),MainActivity.class);
         String nameMr=etNameMr.getText().toString();
         String nameMme=etNameMme.getText().toString();
         String date=tvDate.getText().toString();
@@ -154,9 +135,8 @@ public class ProfilFragment extends AppCompatDialogFragment {
         mapProfil.put("date",date);
 
         databaseReference.setValue(mapProfil);
-        Intent intent=new Intent(getContext(),MainActivity.class);
+        dismiss();
         startActivity(intent);
-
     }
 
     private void layout(View view) {

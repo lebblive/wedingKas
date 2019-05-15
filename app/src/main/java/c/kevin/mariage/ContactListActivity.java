@@ -1,10 +1,12 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class ContactListActivity extends AppCompatActivity {
 
@@ -38,13 +41,17 @@ public class ContactListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         btnAddC=findViewById(R.id.btnAddC);
         rvContact=findViewById(R.id.rvContact);
         btnBack=findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    ContactListActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
         });
 
         btnAddC.setOnClickListener(v -> {
@@ -184,6 +191,9 @@ public class ContactListActivity extends AppCompatActivity {
 
 
     private void viewRecyclerViewContact() {
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvContact.setItemAnimator(animator);
+        rvContact.getItemAnimator().setAddDuration(1000);
         linearLayoutManager=new LinearLayoutManager(this);
         rvContact.setLayoutManager(linearLayoutManager);
         rvContact.setHasFixedSize(true);

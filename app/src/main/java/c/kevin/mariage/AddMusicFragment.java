@@ -2,12 +2,6 @@ package c.kevin.mariage;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +19,24 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddMusicFragment extends AppCompatDialogFragment {
 
-    EditText etNameM;
-    EditText etPhoneM;
-    EditText etAdressM;
-    EditText etMailM;
-    EditText etNoteM;
-    EditText etPriceM;
-    Button btnSaveM;
+    private EditText etNameM;
+    private EditText etPhoneM;
+    private EditText etAdressM;
+    private EditText etMailM;
+    private EditText etNoteM;
+    private EditText etPriceM;
+    private Button btnSaveM;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -145,6 +144,7 @@ public class AddMusicFragment extends AppCompatDialogFragment {
         }else{
             etNameM.setError("you need write name");
         }
+        dismiss();
     }
 
     private void layout(View view) {

@@ -1,10 +1,12 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class MusicActivity extends AppCompatActivity  {
 
@@ -36,13 +39,18 @@ public class MusicActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         btnAddM =findViewById(R.id.btnAddM);
         rvMusic=findViewById(R.id.rvMusic);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MusicActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
+
         });
         btnAddM.setOnClickListener(v -> {
             AddMusicFragment addMusicFragment=new AddMusicFragment();
@@ -59,13 +67,13 @@ public class MusicActivity extends AppCompatActivity  {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout music_root;
-        public TextView tvNameM;
-        public TextView tvPhoneM;
-        public TextView tvAdressM;
-        public TextView tvMailM;
-        public TextView tvNoteM;
-        public TextView tvPriceM;
+        ConstraintLayout music_root;
+        TextView tvNameM;
+        TextView tvPhoneM;
+        TextView tvAdressM;
+        TextView tvMailM;
+        TextView tvNoteM;
+        TextView tvPriceM;
         public Button btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
@@ -97,7 +105,7 @@ public class MusicActivity extends AppCompatActivity  {
         }
         public void setTvPriceM(String tvPriceMs){
             if (tvPriceMs.length()!=0) {
-                tvPriceM.setText(tvPriceMs + " ₪");
+                tvPriceM.setText(tvPriceMs + getString(R.string.money));
             }
         }
     }
@@ -106,7 +114,7 @@ public class MusicActivity extends AppCompatActivity  {
 
         FirebaseRecyclerOptions<Music> options=
                 new FirebaseRecyclerOptions.Builder<Music>().setQuery(query, snapshot -> new Music(
-                        snapshot.child("id").getKey().toString(),
+                        snapshot.child("id").getKey(),
                         snapshot.child("name").getValue().toString(),
                         snapshot.child("phone").getValue().toString(),
                         snapshot.child("adress").getValue().toString(),
@@ -144,7 +152,7 @@ public class MusicActivity extends AppCompatActivity  {
                 //si je click dessu
                 viewHolder.music_root.setOnClickListener(v -> {
 
-                    String mid=music.getNameM().toString();
+                    String mid= music.getNameM();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("music").child(mid);
 
@@ -160,6 +168,9 @@ public class MusicActivity extends AppCompatActivity  {
     }
 
     private void viewRecyclerViewMusic() {
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvMusic.setItemAnimator(animator);
+        rvMusic.getItemAnimator().setAddDuration(1500);
         linearLayoutManager=new LinearLayoutManager(this);
         rvMusic.setLayoutManager(linearLayoutManager);
         rvMusic.setHasFixedSize(true);

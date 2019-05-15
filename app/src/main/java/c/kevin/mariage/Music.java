@@ -2,17 +2,15 @@ package c.kevin.mariage;
 
 public class Music {
 
-    public String idM;
-    public String nameM;
-    public String phoneM;
-    public String adressM;
-    public String emailM;
-    public String noteM;
-    public String priceM;
+    private String idM;
+    private String nameM;
+    private String phoneM;
+    private String adressM;
+    private String emailM;
+    private String noteM;
+    private String priceM;
 
-    public Music(){
-
-    }
+    public Music(){}
 
     public Music(String idM, String nameM, String phoneM, String adressM, String emailM, String noteM, String priceM) {
         this.idM = idM;
@@ -46,27 +44,7 @@ public class Music {
         return priceM;
     }
 
-    public void setIdM(String idM) {
-        this.idM = idM;
-    }
-    public void setNameM(String nameM) {
-        this.nameM = nameM;
-    }
-    public void setPhoneM(String phoneM) {
-        this.phoneM = phoneM;
-    }
-    public void setAdressM(String adressM) {
-        this.adressM = adressM;
-    }
-    public void setEmailM(String emailM) {
-        this.emailM = emailM;
-    }
-    public void setNoteM(String noteM) {
-        this.noteM = noteM;
-    }
-    public void setPriceM(String priceM) {
-        this.priceM = priceM;
-    }
+
 
     @Override
     public String toString() {

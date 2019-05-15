@@ -2,12 +2,6 @@ package c.kevin.mariage;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +19,24 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddPlaceFragment extends AppCompatDialogFragment {
 
-    EditText etNameP;
-    EditText etPhoneP;
-    EditText etAdressP;
-    EditText etMailP;
-    EditText etNoteP;
-    EditText etPriceP;
-    Button btnSaveP;
+    private EditText etNameP;
+    private EditText etPhoneP;
+    private EditText etAdressP;
+    private EditText etMailP;
+    private EditText etNoteP;
+    private EditText etPriceP;
+    private Button btnSaveP;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -143,8 +142,9 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
         }else{
             etNameP.setError("you need write name");
         }
+        dismiss();
 
-        //TODO interdir que le champ contienne es point.
+
     }
 
     private void layout(View view) {

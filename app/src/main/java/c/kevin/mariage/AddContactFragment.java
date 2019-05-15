@@ -24,24 +24,21 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class AddContactFragment extends AppCompatDialogFragment {
 
-    EditText etFirstName;
-    EditText etFamilyName;
-    EditText etPhoneNumber;
-    TextView tvMan;
-    TextView tvWoman;
-    TextView tvOldPerson;
-    TextView tvAdultPerson;
-    TextView tvYoungPerson;
-    EditText etNoteContact;
-    Button btnSaveContact;
+    private EditText etFirstName;
+    private EditText etFamilyName;
+    private EditText etPhoneNumber;
+    private TextView tvMan;
+    private TextView tvWoman;
+    private TextView tvOldPerson;
+    private TextView tvAdultPerson;
+    private TextView tvYoungPerson;
+    private EditText etNoteContact;
+    private Button btnSaveContact;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -97,31 +94,46 @@ public class AddContactFragment extends AppCompatDialogFragment {
 
 
     private void selectedAgeYoungPerson() {
-        tvYoungPerson.setTextColor(0xFF03A9F4);
+        tvYoungPerson.setTextColor(Color.WHITE);
+        tvYoungPerson.setBackgroundColor(0xFF03A9F4);
         tvAdultPerson.setTextColor(Color.BLACK);
+        tvAdultPerson.setBackgroundColor(Color.WHITE);
         tvOldPerson.setTextColor(Color.BLACK);
+        tvOldPerson.setBackgroundColor(Color.WHITE);
     }
 
     private void selectedAgeAdultPerson() {
-        tvAdultPerson.setTextColor(0xFF03A9F4);
+        tvAdultPerson.setTextColor(Color.WHITE);
+        tvAdultPerson.setBackgroundColor(0xFF03A9F4);
         tvOldPerson.setTextColor(Color.BLACK);
+        tvOldPerson.setBackgroundColor(Color.WHITE);
         tvYoungPerson.setTextColor(Color.BLACK);
+        tvYoungPerson.setBackgroundColor(Color.WHITE);
+
     }
 
     private void selectedAgeOldPerson() {
-        tvOldPerson.setTextColor(0xFF03A9F4);
+        tvOldPerson.setTextColor(Color.WHITE);
+        tvOldPerson.setBackgroundColor(0xFF03A9F4);
         tvAdultPerson.setTextColor(Color.BLACK);
+        tvAdultPerson.setBackgroundColor(Color.WHITE);
         tvYoungPerson.setTextColor(Color.BLACK);
+        tvYoungPerson.setBackgroundColor(Color.WHITE);
     }
 
     private void selectedSexeMan() {
-        tvMan.setTextColor(0xFF03A9F4);
+        tvMan.setTextColor(Color.WHITE);
+        tvMan.setBackgroundColor(0xFF03A9F4);
         tvWoman.setTextColor(Color.BLACK);
+        tvWoman.setBackgroundColor(Color.WHITE);
 
     }
     private void selectedSexeWoman() {
-        tvWoman.setTextColor(0xFF03A9F4);
+        tvWoman.setTextColor(Color.WHITE);
+        tvWoman.setBackgroundColor(0xFF03A9F4);
         tvMan.setTextColor(Color.BLACK);
+        tvMan.setBackgroundColor(Color.WHITE);
+
     }
 
     public void setInfoFoto() {
@@ -142,22 +154,22 @@ public class AddContactFragment extends AppCompatDialogFragment {
             mapContact.put("phone",etPhoneNumber.getText().toString());
 
             //select sex
-            if (tvMan.getCurrentTextColor()==0xFF03A9F4){
+            if (tvMan.getCurrentTextColor()==Color.WHITE){
                 mapContact.put("sexe",tvMan.getText().toString());
 
-            }if (tvWoman.getCurrentTextColor()==0xFF03A9F4){
+            }if (tvWoman.getCurrentTextColor()==Color.WHITE){
                 mapContact.put("sexe",tvWoman.getText().toString());
             }if (tvMan.getCurrentTextColor()==Color.BLACK && tvWoman.getCurrentTextColor()==Color.BLACK ){
                 mapContact.put("sexe","");
             }
             // select Age
-            if (tvOldPerson.getCurrentTextColor()==0xFF03A9F4){
+            if (tvOldPerson.getCurrentTextColor()==Color.WHITE){
                 mapContact.put("age",tvOldPerson.getText().toString());
             }
-            if (tvAdultPerson.getCurrentTextColor()==0xFF03A9F4){
+            if (tvAdultPerson.getCurrentTextColor()==Color.WHITE){
                 mapContact.put("age",tvAdultPerson.getText().toString());
             }
-            if (tvYoungPerson.getCurrentTextColor()==0xFF03A9F4){
+            if (tvYoungPerson.getCurrentTextColor()==Color.WHITE){
                 mapContact.put("age",tvYoungPerson.getText().toString());
             } if(tvOldPerson.getCurrentTextColor()==Color.BLACK &&
                     tvAdultPerson.getCurrentTextColor()==Color.BLACK &&
@@ -171,6 +183,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
         }else{
             etFirstName.setError("you need write name");
         }
+        dismiss();
     }
 
     private void getInfo() {

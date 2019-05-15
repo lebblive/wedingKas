@@ -30,13 +30,13 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class AddFotoFragment extends AppCompatDialogFragment {
 
-    EditText etNameF;
-    EditText etPhoneF;
-    EditText etAdressF;
-    EditText etMailF;
-    EditText etNoteF;
-    EditText etPriceF;
-    Button btnSaveF;
+    private EditText etNameF;
+    private EditText etPhoneF;
+    private EditText etAdressF;
+    private EditText etMailF;
+    private EditText etNoteF;
+    private EditText etPriceF;
+    private Button btnSaveF;
 
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -103,8 +103,7 @@ public class AddFotoFragment extends AppCompatDialogFragment {
         }else{
             etNameF.setError("you need write name");
         }
-
-        //TODO interdir que le champ contienne es point.
+        dismiss();
 
 
                /*

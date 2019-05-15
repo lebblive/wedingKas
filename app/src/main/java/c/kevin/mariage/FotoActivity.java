@@ -1,10 +1,12 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class FotoActivity extends AppCompatActivity {
 
@@ -37,13 +40,18 @@ public class FotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_foto);
+        //enlever la barre du haut
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         btnAddF =findViewById(R.id.btnAddF);
         rvFoto=findViewById(R.id.rvFoto);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    FotoActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
         });
         btnAddF.setOnClickListener(v -> {
             AddFotoFragment addFotoFragment=new AddFotoFragment();
@@ -84,12 +92,7 @@ public class FotoActivity extends AppCompatActivity {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameF(String tvNameFs){
-//                if (tvNameFs.length()!=0){
-                    tvNameF.setText(tvNameFs);
-//                }
-
-            }
+        public void setTvNameF(String tvNameFs){tvNameF.setText(tvNameFs);}
         public void setTvPhoneF(String tvPhoneFs){
                 tvPhoneF.setText(tvPhoneFs);
         }
@@ -104,7 +107,7 @@ public class FotoActivity extends AppCompatActivity {
         }
         public void setTvPriceF(String tvPriceFs){
             if (tvPriceFs.length()!=0) {
-                tvPriceF.setText(tvPriceFs + " ₪");
+                tvPriceF.setText(tvPriceFs + getString(R.string.money));
             }
         }
     }
@@ -149,13 +152,19 @@ public class FotoActivity extends AppCompatActivity {
                     String fid=foto.getNameF().toString();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("foto").child(fid);
+
+                    //remove the item with animat
+//                    FadeInAnimator animator=new FadeInAnimator(new OvershootInterpolator(1f));
+//                    animator.setRemoveDuration(2000);
+//                    animator.animateRemove(viewHolder);
+
+                    //remove on db
                     databaseReference.removeValue();
                 });
-
                 //si je click dessu
                 viewHolder.foto_root.setOnClickListener(v -> {
 
-                    String fid=foto.getNameF().toString();
+                    String fid=foto.getNameF();
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("foto").child(fid);
 
@@ -170,19 +179,18 @@ public class FotoActivity extends AppCompatActivity {
                     addFotoFragment.setArguments(bundle);
                     addFotoFragment.show(getSupportFragmentManager(),"AddFotoFragment");
 
-                    //stam pour le kif dune methode en plus a suprimer
-//                    Random r=new Random();
-//                    int c= Color.rgb(r.nextInt(256),r.nextInt(256),r.nextInt(256));
-//
-//                    viewHolder.foto_root.setBackgroundColor(c);
-
-//                    Toast.makeText(FotoActivity.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
                 });
             }
         };
+
+
         rvFoto.setAdapter(adapter);
         }
     private void viewRecyclerViewFoto() {
+        //animation betwen rv
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvFoto.setItemAnimator(animator);
+        rvFoto.getItemAnimator().setAddDuration(1000);
         linearLayoutManager=new LinearLayoutManager(this);
         rvFoto.setLayoutManager(linearLayoutManager);
         rvFoto.setHasFixedSize(true);

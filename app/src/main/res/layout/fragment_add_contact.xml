@@ -8,145 +8,159 @@
 
     <EditText
         android:id="@+id/etFirstName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
-        android:hint="enter first name"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/enter_first_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/etPhoneNumber"
         app:layout_constraintEnd_toStartOf="@+id/etFamilyName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etFamilyName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:hint="enter family name"
+        android:hint="@string/enter_family_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/etPhoneNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/etFirstName"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="no"
+        tools:targetApi="o" />
 
     <EditText
         android:id="@+id/etPhoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="enter phone number"
-        android:inputType="number"
+        android:hint="@string/enter_phone_number"
+        app:layout_constraintBottom_toTopOf="@+id/tvMan"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/etFirstName"
+        android:autofillHints="no"
+        tools:targetApi="o"
+        android:inputType=""
+        tools:ignore="TextFields" />
 
     <TextView
         android:id="@+id/tvMan"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Man"
+        android:background="@drawable/border3"
+        android:text="@string/man"
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/tvOldPerson"
         app:layout_constraintEnd_toStartOf="@+id/tvWoman"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
 
     <TextView
         android:id="@+id/tvWoman"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="woman"
+        android:background="@drawable/border3"
+        android:text="@string/woman"
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/tvYoungPerson"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvMan"
         app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
 
     <TextView
         android:id="@+id/tvOldPerson"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:text="old Person"
+        android:background="@drawable/border3"
+        android:text="@string/old_person"
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/etNoteContact"
         app:layout_constraintEnd_toStartOf="@+id/tvAdultPerson"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMan" />
 
     <TextView
         android:id="@+id/tvAdultPerson"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="adult Person"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/border3"
+        android:text="@string/adult_person"
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/etNoteContact"
         app:layout_constraintEnd_toStartOf="@+id/tvYoungPerson"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvOldPerson"
         app:layout_constraintTop_toBottomOf="@+id/tvWoman" />
 
     <TextView
         android:id="@+id/tvYoungPerson"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="young Person"
+        android:background="@drawable/border3"
+        android:text="@string/young_person"
+        android:textAlignment="center"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/etNoteContact"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvAdultPerson"
         app:layout_constraintTop_toBottomOf="@+id/tvWoman" />
-
-    <Button
-        android:id="@+id/btnSaveContact"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNoteContact" />
 
     <EditText
         android:id="@+id/etNoteContact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:hint="Note"
-        app:layout_constraintBottom_toTopOf="@+id/btnSaveContact"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/note"
+        app:layout_constraintEnd_toStartOf="@+id/btnSaveContact"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOldPerson" />
+        app:layout_constraintTop_toBottomOf="@+id/tvOldPerson"
+        android:autofillHints="no"
+        tools:targetApi="o"
+        android:inputType="text" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+    <Button
+        android:id="@+id/btnSaveContact"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_save2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etNoteContact"
+        app:layout_constraintTop_toBottomOf="@+id/tvYoungPerson" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

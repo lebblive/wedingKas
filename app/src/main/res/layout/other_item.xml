@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
-        android:background="#f4fefe"
+        android:background="#f0e6f4"
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical"
@@ -32,7 +32,8 @@
             android:id="@+id/tvNameO"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="name"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/name"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -93,25 +94,28 @@
             android:id="@+id/etNoteO"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnDelete"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etPriceO" />
 
 
         <Button
             android:id="@+id/btnDelete"
-            android:layout_width="39dp"
-            android:layout_height="38dp"
-            android:layout_gravity="right"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ic_delete"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/ic_delete2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etNoteO" />
+            app:layout_constraintStart_toEndOf="@+id/etNoteO"
+            app:layout_constraintTop_toBottomOf="@+id/etPriceO" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

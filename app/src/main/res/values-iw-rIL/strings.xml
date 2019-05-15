@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wedding Kas</string>
+    <string name="guest">מוזמנים</string>
+    <string name="photographers">צלם</string>
+    <string name="music">מוזיקה</string>
+    <string name="other_service">שרות אחר</string>
+    <string name="EventsRooms">עולם</string>
+    <string name="name">שם</string>
+    <string name="set_your_profil">אגדר את הפרופיל</string>
+    <string name="date">תאריך</string>
+    <string name="days">יום</string>
+    <string name="hours">שעות</string>
+    <string name="minutes">דקות</string>
+    <string name="name_of_the_couple">שם הזוג</string>
+    <string name="groom">חתן</string>
+    <string name="bride">כלה</string>
+    <string name="your_date">תאריכם</string>
+    <string name="phone">טל</string>
+    <string name="adress">כתובת</string>
+    <string name="email">מאיל</string>
+    <string name="price">מחיר</string>
+    <string name="enter_first_name">שם פרטי</string>
+    <string name="enter_family_name">שם משפחה</string>
+    <string name="man">גברים</string>
+    <string name="woman">נשים</string>
+    <string name="old_person">מבוגרים</string>
+    <string name="adult_person">בוגרים</string>
+    <string name="young_person">ילדים</string>
+    <string name="enter_phone_number">טל</string>
+    <string name="money">₪</string>
+    <string name="note">אחר</string>
+    <string name="Persons_number">כמות המוזמנים</string>
+</resources>

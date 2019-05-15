@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -31,9 +34,7 @@ import java.util.Iterator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -42,35 +43,32 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RC_SIGN_IN = 123;
-    TextView tvNameMr;
-    TextView tvNameMme;
-    TextView tvDateFrench;
-    TextView tvDay;
-    TextView tvHours;
-    TextView tvMinute;
-    Button btnChange;
-    TextView tvResume;
-    ImageView ivPhoto;
-    ImageView ivMusic;
-    ImageView ivPlace;
-    ImageView ivContact;
-    ImageView ivOther;
+    private TextView tvNameMr;
+    private TextView tvNameMme;
+    private TextView tvDateFrench;
+    private TextView tvDay;
+    private TextView tvHours;
+    private TextView tvMinute;
+    private Button btnChange;
+    private TextView tvResume;
+    private ImageView ivPhoto;
+    private ImageView ivMusic;
+    private ImageView ivPlace;
+    private ImageView ivContact;
+    private ImageView ivOther;
 
     Calendar c=Calendar.getInstance();
 
-    int currentYear=c.get(Calendar.YEAR);
-    int currentMonth=c.get(Calendar.MONTH)+1;
-    int currentDay=c.get(Calendar.DAY_OF_MONTH);
-    int currentHour=c.get(Calendar.HOUR_OF_DAY);
-    int currentMinute=c.get(Calendar.MINUTE);
-
-
-     int name=0;
-     int man=0;
-    int woman=0;
-    int old =0;
-    int adult=0;
-    int young =0;
+    private int currentYear=c.get(Calendar.YEAR);
+    private int currentMonth=c.get(Calendar.MONTH)+1;
+    private int currentDay=c.get(Calendar.DAY_OF_MONTH);
+    private int currentHour=c.get(Calendar.HOUR_OF_DAY);
+    private int currentMinute=c.get(Calendar.MINUTE);
+    private int man=0;
+    private int woman=0;
+    private int old =0;
+    private int adult=0;
+    private int young =0;
 
 
 //    String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -79,14 +77,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -97,35 +89,42 @@ public class MainActivity extends AppCompatActivity
             ProfilFragment profilFragment =new ProfilFragment();
             profilFragment.show(getSupportFragmentManager(),"ProfilFragment");
         });
-        tvResume.setOnClickListener(v -> {
-            Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);
-            startActivity(intent);
-        });
         ivPhoto.setOnClickListener(v -> {
             Intent intent=new Intent(getApplicationContext(),FotoActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivPhoto,"");
+            startActivity(intent,transition.toBundle());
         });
         ivMusic.setOnClickListener(v -> {
             Intent intent=new Intent(getApplicationContext(),MusicActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivMusic,"");
+            startActivity(intent,transition.toBundle());
         });
         ivPlace.setOnClickListener(v -> {
             Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivPlace,"");
+            startActivity(intent,transition.toBundle());
         });
         ivContact.setOnClickListener(v -> {
             Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivContact,"");
+            startActivity(intent,transition.toBundle());
         });
         ivOther.setOnClickListener(v -> {
             Intent intent=new Intent(getApplicationContext(),OtherActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivOther,"");
+            startActivity(intent,transition.toBundle());
         });
 
         fetch();
         getNumberPerson();
 
     }
+
 
     private void getNumberPerson() {
 
@@ -191,26 +190,26 @@ public class MainActivity extends AppCompatActivity
                                     young++;
                                 }
 
-                                String resume="nombre de persone " + arrayList.size()+ " : ";
+                                String resume=getString(R.string.Persons_number)+" " + arrayList.size()+ " : ";
 
                                 if (man!=0){
-                                    resume=resume+ "\n"+String.valueOf(man)+" man ";
+                                    resume=resume+ "\n"+String.valueOf(man)+" " +getString(R.string.man);
                                 }
                                 if (woman!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(woman)+" woman ";
+                                            String.valueOf(woman)+" " +getString(R.string.woman);
                                 }
                                 if (old!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(old)+" old person ";
+                                            String.valueOf(old)+" " +getString(R.string.old_person);
                                 }
                                 if (adult!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(adult)+" adult person ";
+                                            String.valueOf(adult)+" " +getString(R.string.adult_person);
                                 }
                                 if (young!=0){
                                     resume=resume+"\n"+
-                                        String.valueOf(young)+" young person ";
+                                        String.valueOf(young)+" " +getString(R.string.young_person);
                                 }
 
                                 tvResume.setText(resume);
@@ -232,8 +231,6 @@ public class MainActivity extends AppCompatActivity
                 }//fin de la methode getidContact
             });
 
-        }else {
-            login();
         }
     }
 
@@ -254,14 +251,23 @@ public class MainActivity extends AppCompatActivity
                         if (dataSnapshot.child("nameMr").getValue() != null) {
                             String nameMr = dataSnapshot.child("nameMr").getValue().toString();
                             tvNameMr.setText(nameMr);
+                            YoYo.with(Techniques.DropOut).playOn(tvNameMr);
+                        }else {
+                            tvNameMr.setText(getString(R.string.set_your_profil));
                         }
                         if (dataSnapshot.child("nameMme").getValue() != null) {
                             String nameMme = dataSnapshot.child("nameMme").getValue().toString();
                             tvNameMme.setText(nameMme);
+                            YoYo.with(Techniques.DropOut).playOn(tvNameMme);
+                        }else {
+                            tvNameMme.setText(getString(R.string.set_your_profil));
                         }
                         if (dataSnapshot.child("date").getValue() != null) {
                             String date = dataSnapshot.child("date").getValue().toString();
                             tvDateFrench.setText(date);
+                            YoYo.with(Techniques.Landing).playOn(tvDateFrench);
+                        }else {
+                            tvDateFrench.setText(getString(R.string.set_your_profil));
                         }
                     }
                 }
@@ -306,9 +312,14 @@ public class MainActivity extends AppCompatActivity
                         String restOfHour = String.valueOf(Math.abs(dDateSelected.getHours() - dDateToday.getHours()));
                         String restOfMinute = String.valueOf(Math.abs(dDateSelected.getMinutes() - dDateToday.getMinutes()));
 
-                        tvDay.setText(restOfDay + " DAY");
-                        tvHours.setText(restOfHour + " HOUR");
-                        tvMinute.setText(restOfMinute + " MINUTE");
+                        tvDay.setText(restOfDay);
+                        tvHours.setText(restOfHour);
+                        tvMinute.setText(restOfMinute);
+                        //animation
+                        YoYo.with(Techniques.RollIn).playOn(tvDay);
+                        YoYo.with(Techniques.RollIn).playOn(tvHours);
+                        YoYo.with(Techniques.RollIn).playOn(tvMinute);
+
 
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -320,10 +331,18 @@ public class MainActivity extends AppCompatActivity
 
                 }
             });
-
-        }else {
-            login();
         }
+//        setYourProfil();
+    }
+
+    private void setYourProfil() {
+        tvNameMr.setText(getString(R.string.set_your_profil));
+        tvNameMme.setText(getString(R.string.set_your_profil));
+        tvDateFrench.setText(getString(R.string.set_your_profil));
+        tvDay.setText(getString(R.string.set_your_profil));
+        tvHours.setText(getString(R.string.set_your_profil));
+        tvMinute.setText(getString(R.string.set_your_profil));
+        tvResume.setText("");
     }
 
 
@@ -341,6 +360,11 @@ public class MainActivity extends AppCompatActivity
         ivPlace=findViewById(R.id.ivPlace);
         ivContact=findViewById(R.id.ivContact);
         ivOther=findViewById(R.id.ivOther);
+//        tvPhoto=findViewById(R.id.tvPhoto);
+//        tvMusic=findViewById(R.id.tvMusic);
+//        tvPlace=findViewById(R.id.tvPlace);
+//        tvOther=findViewById(R.id.tvOther);
+
 
 
     }
@@ -358,7 +382,6 @@ public class MainActivity extends AppCompatActivity
             */
 
             /*
-            Todo : quand jouvre un user je veut pas que sa seprime
             tout se quil y a dedans
              */
 

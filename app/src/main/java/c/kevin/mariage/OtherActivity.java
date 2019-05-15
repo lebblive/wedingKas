@@ -1,10 +1,12 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class OtherActivity extends AppCompatActivity {
 
@@ -36,13 +39,17 @@ public class OtherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         btnAddO =findViewById(R.id.btnAddO);
         rvOther=findViewById(R.id.rvOther);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    OtherActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
         });
         btnAddO.setOnClickListener(v -> {
             AddOtherFragment addOtherFragment = new AddOtherFragment();
@@ -58,16 +65,16 @@ public class OtherActivity extends AppCompatActivity {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ConstraintLayout other_root;
-        public TextView tvNameO;
-        public TextView tvPhoneO;
-        public TextView tvAdressO;
-        public TextView tvMailO;
-        public TextView tvNoteO;
-        public TextView tvPriceO;
+        ConstraintLayout other_root;
+        TextView tvNameO;
+        TextView tvPhoneO;
+        TextView tvAdressO;
+        TextView tvMailO;
+        TextView tvNoteO;
+        TextView tvPriceO;
         public Button btnDelete;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             other_root=itemView.findViewById(R.id.other_root);
             tvNameO=itemView.findViewById(R.id.tvNameO);
@@ -79,24 +86,24 @@ public class OtherActivity extends AppCompatActivity {
             btnDelete=itemView.findViewById(R.id.btnDelete);
         }
 
-        public void setTvNameO(String tvNameOs){
+        void setTvNameO(String tvNameOs){
             tvNameO.setText(tvNameOs);
         }
-        public void setTvPhoneO(String tvPhoneOs){
+        void setTvPhoneO(String tvPhoneOs){
             tvPhoneO.setText(tvPhoneOs);
         }
-        public void setTvAdressO(String tvAdressOs){
+        void setTvAdressO(String tvAdressOs){
             tvAdressO.setText(tvAdressOs);
         }
-        public void setTvMailO(String tvMailOs) {
+        void setTvMailO(String tvMailOs) {
             tvMailO.setText(tvMailOs);
         }
-        public void setTvNoteO(String tvNoteOs){
+        void setTvNoteO(String tvNoteOs){
             tvNoteO.setText(tvNoteOs);
         }
-        public void setTvPriceO(String tvPriceOs){
+        void setTvPriceO(String tvPriceOs){
             if (tvPriceOs.length()!=0) {
-                tvPriceO.setText(tvPriceOs + " ₪");
+                tvPriceO.setText(tvPriceOs + getString(R.string.money));
             }
         }
     }
@@ -105,7 +112,7 @@ public class OtherActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Other> options=
                 new FirebaseRecyclerOptions.Builder<Other>().setQuery(query, snapshot -> new Other(
-                        snapshot.child("id").getKey().toString(),
+                        snapshot.child("id").getKey(),
                         snapshot.child("name").getValue().toString(),
                         snapshot.child("phone").getValue().toString(),
                         snapshot.child("adress").getValue().toString(),
@@ -160,6 +167,9 @@ public class OtherActivity extends AppCompatActivity {
     }
 
     private void viewRecyclerViewOther() {
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvOther.setItemAnimator(animator);
+        rvOther.getItemAnimator().setAddDuration(1500);
         linearLayoutManager=new LinearLayoutManager(this);
         rvOther.setLayoutManager(linearLayoutManager);
         rvOther.setHasFixedSize(true);

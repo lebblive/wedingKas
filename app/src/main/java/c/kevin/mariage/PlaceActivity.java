@@ -1,10 +1,12 @@
 package c.kevin.mariage;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 public class PlaceActivity extends AppCompatActivity  {
 
@@ -36,13 +39,18 @@ public class PlaceActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
         btnAddP =findViewById(R.id.btnAddP);
         rvPlace=findViewById(R.id.rvPlace);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    PlaceActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
         });
         btnAddP.setOnClickListener(v -> {
             AddPlaceFragment addPlaceFragment=new AddPlaceFragment();
@@ -97,7 +105,7 @@ public class PlaceActivity extends AppCompatActivity  {
         }
         public void setTvPriceP(String tvPricePs){
             if (tvPricePs.length()!=0) {
-                tvPriceP.setText(tvPricePs + " ₪");
+                tvPriceP.setText(tvPricePs + getString(R.string.money));
             }
         }
     }
@@ -158,6 +166,9 @@ public class PlaceActivity extends AppCompatActivity  {
         rvPlace.setAdapter(adapter);
     }
     private void viewRecyclerViewPlace() {
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvPlace.setItemAnimator(animator);
+        rvPlace.getItemAnimator().setAddDuration(1500);
         linearLayoutManager=new LinearLayoutManager(this);
         rvPlace.setLayoutManager(linearLayoutManager);
         rvPlace.setHasFixedSize(true);
