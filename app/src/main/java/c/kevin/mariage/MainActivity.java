@@ -11,6 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.firebase.ui.auth.AuthUI;
@@ -30,13 +39,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 
 public class MainActivity extends AppCompatActivity
@@ -72,18 +74,38 @@ public class MainActivity extends AppCompatActivity
     private int young =0;
 
 
-//    String uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         login();
         layout();
+        tvNameMr.setOnClickListener(v -> {
+            ProfilFragment profilFragment = new ProfilFragment();
+            profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
+        });
+        tvNameMme.setOnClickListener(v -> {
+            ProfilFragment profilFragment = new ProfilFragment();
+            profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
+        });
+        tvDateFrench.setOnClickListener(v -> {
+                    ProfilFragment profilFragment = new ProfilFragment();
+                    profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
+                });
         btnChange.setOnClickListener(v -> {
             ProfilFragment profilFragment =new ProfilFragment();
             profilFragment.show(getSupportFragmentManager(),"ProfilFragment");
