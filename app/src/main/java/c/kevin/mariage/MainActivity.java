@@ -79,11 +79,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -215,23 +215,23 @@ public class MainActivity extends AppCompatActivity
                                 String resume=getString(R.string.Persons_number)+" " + arrayList.size()+ " : ";
 
                                 if (man!=0){
-                                    resume=resume+ "\n"+String.valueOf(man)+" " +getString(R.string.man);
+                                    resume=resume+ "\n"+ man +" " +getString(R.string.man);
                                 }
                                 if (woman!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(woman)+" " +getString(R.string.woman);
+                                            woman +" " +getString(R.string.woman);
                                 }
                                 if (old!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(old)+" " +getString(R.string.old_person);
+                                            old +" " +getString(R.string.old_person);
                                 }
                                 if (adult!=0){
                                     resume=resume+"\n"+
-                                            String.valueOf(adult)+" " +getString(R.string.adult_person);
+                                            adult +" " +getString(R.string.adult_person);
                                 }
                                 if (young!=0){
                                     resume=resume+"\n"+
-                                        String.valueOf(young)+" " +getString(R.string.young_person);
+                                            young +" " +getString(R.string.young_person);
                                 }
 
                                 tvResume.setText(resume);
@@ -450,7 +450,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.

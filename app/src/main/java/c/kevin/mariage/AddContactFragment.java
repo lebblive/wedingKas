@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,10 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
 
 
 
@@ -210,23 +210,23 @@ public class AddContactFragment extends AppCompatDialogFragment {
                 }
                 if (dsSexe != null) {
                     String sexe = dsSexe.toString();
-                    if (sexe.equals("Man")){
+                    if (sexe.equals(getString(R.string.man))){
                         selectedSexeMan();
                     }
-                    if (sexe.equals("woman")){
+                    if (sexe.equals(getString(R.string.woman))){
                         selectedSexeWoman();
                     }
                 }
 
                 if (dsAge != null) {
                     String age = dsAge.toString();
-                    if (age.equals("old Person")){
+                    if (age.equals(getString(R.string.old_person))){
                         selectedAgeOldPerson();
                     }
-                    if (age.equals("adult Person")){
+                    if (age.equals(getString(R.string.adult_person))){
                         selectedAgeAdultPerson();
                     }
-                    if (age.equals("young Person")){
+                    if (age.equals(getString(R.string.young_person))){
                         selectedAgeYoungPerson();
                     }
                 }
