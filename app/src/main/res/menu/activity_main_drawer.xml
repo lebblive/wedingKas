@@ -7,37 +7,33 @@
         <item
             android:id="@+id/home"
             android:icon="@drawable/ic_home2"
-            android:title="Home" />
+            android:title="@string/homme" />
         <item
             android:id="@+id/photo"
             android:icon="@drawable/ic_photo2"
-            android:title="Photo" />
+            android:title="@string/photographers" />
         <item
             android:id="@+id/salle"
             android:icon="@drawable/ic_salle3"
-            android:title="Salle" />
+            android:title="@string/EventsRooms" />
         <item
             android:id="@+id/music"
             android:icon="@drawable/ic_music2"
-            android:title="music" />
+            android:title="@string/music" />
         <item
             android:id="@+id/other"
             android:icon="@drawable/ic_other"
-            android:title="other" />
+            android:title="@string/other_service" />
 
         <item
             android:id="@+id/list"
             android:icon="@drawable/ic_invite2"
-            android:title="liste" />
+            android:title="@string/guest" />
+        <item
+            android:id="@+id/disconect"
+            android:icon="@drawable/ic_disconect"
+            android:title="@string/disconnect" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/disconect"
-                android:icon="@drawable/ic_disconect"
-                android:title="disconect" />
-        </menu>
-    </item>
 
 </menu>

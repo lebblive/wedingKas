@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
         login();
@@ -140,16 +141,11 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this,ivOther,"");
             startActivity(intent,transition.toBundle());
         });
-
         fetch();
         getNumberPerson();
-
     }
 
-
     private void getNumberPerson() {
-
-
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -157,8 +153,7 @@ public class MainActivity extends AppCompatActivity
                     .child("users").child(uid).child("contact");
 
             dbRangerContact.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                // va chercher dans la db tout les contact et recuper moi leur enfant
+                // church in db all contact and give me ther children
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     ArrayList<String> arrayList= new ArrayList<>();
@@ -166,16 +161,13 @@ public class MainActivity extends AppCompatActivity
                         String pushKey = snapshot.getKey();
                         arrayList.add(pushKey);
                     }
-
                     getIdContact(arrayList);
                 }
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+                //end recuperation
 
-                }
-                //fin de la recuperation
-
-                //recupere le nom de chaque id de la list contact
+                //get name one once id contact
                 private void getIdContact(ArrayList<String> arrayList) {
                     String idC;
                     for (int i = 0; i < arrayList.size(); i++) {
@@ -184,8 +176,6 @@ public class MainActivity extends AppCompatActivity
                         //rentre dans la liste des contact et recuper toute les info
                         DatabaseReference dbNumber = FirebaseDatabase.getInstance().getReference()
                                 .child("users").child(uid).child("contact").child(idC);
-
-
                         dbNumber.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -215,42 +205,31 @@ public class MainActivity extends AppCompatActivity
                                 String resume=getString(R.string.Persons_number)+" " + arrayList.size()+ " : ";
 
                                 if (man!=0){
-                                    resume=resume+ "\n"+ man +" " +getString(R.string.man);
+                                    resume=resume+ "\n"+ man +" " +getString(R.string.mans);
                                 }
                                 if (woman!=0){
                                     resume=resume+"\n"+
-                                            woman +" " +getString(R.string.woman);
+                                            woman +" " +getString(R.string.womans);
                                 }
                                 if (old!=0){
                                     resume=resume+"\n"+
-                                            old +" " +getString(R.string.old_person);
+                                            old +" " +getString(R.string.old_persons);
                                 }
                                 if (adult!=0){
                                     resume=resume+"\n"+
-                                            adult +" " +getString(R.string.adult_person);
+                                            adult +" " +getString(R.string.adult_persons);
                                 }
                                 if (young!=0){
                                     resume=resume+"\n"+
-                                            young +" " +getString(R.string.young_person);
+                                            young +" " +getString(R.string.young_persons);
                                 }
-
                                 tvResume.setText(resume);
-
-
-                            }//fin du ondatachange
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
                             }
-                        });// fin de la recuperation
-
-
-
-
-                    }//fin du for
-
-
-                }//fin de la methode getidContact
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        });
+                    }
+                }
             });
 
         }
@@ -339,26 +318,20 @@ public class MainActivity extends AppCompatActivity
                         tvDay.setText(restOfDay);
                         tvHours.setText(restOfHour);
                         tvMinute.setText(restOfMinute);
+
                         //animation
                         YoYo.with(Techniques.RollIn).playOn(tvDay);
                         YoYo.with(Techniques.RollIn).playOn(tvHours);
                         YoYo.with(Techniques.RollIn).playOn(tvMinute);
-
-
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
         }
     }
-
-
 
     private void layout() {
         tvNameMr=findViewById(R.id.tvNameMr);
@@ -375,7 +348,6 @@ public class MainActivity extends AppCompatActivity
         ivContact=findViewById(R.id.ivContact);
         ivOther=findViewById(R.id.ivOther);
         tvSetProfil=findViewById(R.id.tvSetProfil);
-
     }
 
     @Override
@@ -493,8 +465,7 @@ public class MainActivity extends AppCompatActivity
                             createSignInIntentBuilder().
                             setAvailableProviders(Arrays.asList(
                                     new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                    new AuthUI.IdpConfig.EmailBuilder().build(),
-                                    new AuthUI.IdpConfig.AnonymousBuilder().build()))
+                                    new AuthUI.IdpConfig.EmailBuilder().build()))
                             .setLogo(R.drawable.flower)
                             .build(),
                     RC_SIGN_IN);

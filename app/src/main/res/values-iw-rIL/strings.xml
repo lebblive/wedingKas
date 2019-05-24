@@ -22,8 +22,8 @@
     <string name="price">מחיר</string>
     <string name="enter_first_name">שם פרטי</string>
     <string name="enter_family_name">שם משפחה</string>
-    <string name="man">גברים</string>
-    <string name="woman">נשים</string>
+    <string name="man">גבר</string>
+    <string name="woman">אישה</string>
     <string name="old_person">מבוגר</string>
     <string name="adult_person">בוגר</string>
     <string name="young_person">ילד</string>
@@ -31,4 +31,11 @@
     <string name="money">₪</string>
     <string name="note">אחר</string>
     <string name="Persons_number">כמות המוזמנים</string>
+    <string name="disconnect">להתנתק</string>
+    <string name="homme">בית</string>
+    <string name="adult_persons">בוגרים</string>
+    <string name="mans">גברים</string>
+    <string name="old_persons">מבוגרים</string>
+    <string name="womans">נשים</string>
+    <string name="young_persons">ילדים</string>
 </resources>

@@ -15,8 +15,8 @@ android {
         applicationId "c.kevin.mariage"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.03 - fix bug "
+        versionCode 4
+        versionName "1.0.04 - debug autentification and fix colors "
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">kas IL even</string>
-    <string name="guest">Liste d\'invité</string>
+    <string name="guest">Liste d\'invités</string>
     <string name="photographers">Photographe</string>
     <string name="music">Musique</string>
     <string name="other_service">Autre Fournisseur</string>
@@ -23,12 +23,19 @@
     <string name="note">Note</string>
     <string name="enter_first_name">Prénom</string>
     <string name="enter_family_name">Nom</string>
-    <string name="man">Hommes</string>
-    <string name="woman">Femmes</string>
-    <string name="old_person">Personne Agés</string>
-    <string name="adult_person">Adultes</string>
-    <string name="young_person">Enfants</string>
+    <string name="man">Homme</string>
+    <string name="woman">Femme</string>
+    <string name="old_person">Personne Agé</string>
+    <string name="adult_person">Adulte</string>
+    <string name="young_person">Enfant</string>
     <string name="enter_phone_number">Télephone</string>
     <string name="money">€</string>
     <string name="Persons_number">Nombres de Personne</string>
+    <string name="disconnect">Se déconnecter</string>
+    <string name="homme">Accueille</string>
+    <string name="adult_persons">Adultes</string>
+    <string name="mans">Hommes</string>
+    <string name="old_persons">Personne Agés</string>
+    <string name="womans">Femmes</string>
+    <string name="young_persons">Enfants</string>
 </resources>
