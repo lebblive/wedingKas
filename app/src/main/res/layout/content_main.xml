@@ -7,187 +7,21 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/fui_transparent"
-        android:contentDescription="@string/app_name"
-        android:translationX="-2dp"
-        android:translationY="-2dp"
-        android:translationZ="-2dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/flower" />
-
-    <TextView
-        android:id="@+id/tvNameMr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border4"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDateFrench"
-        app:layout_constraintEnd_toStartOf="@+id/tvNameMme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvNameMme"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border4"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDateFrench"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvNameMr"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDateFrench"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:text="@string/date"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameMr" />
-
-    <TextView
-        android:id="@+id/tvDay"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvDay2"
-        app:layout_constraintEnd_toStartOf="@+id/tvHours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil" />
-
-    <TextView
-        android:id="@+id/tvMinute"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvMinute2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvHours"
-        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil" />
-
-    <TextView
-        android:id="@+id/tvHours"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvHours2"
-        app:layout_constraintEnd_toStartOf="@+id/tvMinute"
-        app:layout_constraintStart_toEndOf="@+id/tvDay"
-        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil" />
-
-    <TextView
-        android:id="@+id/tvDay2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:text="@string/days"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/ivPhoto"
-        app:layout_constraintEnd_toStartOf="@+id/tvHours2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDay" />
-
-    <TextView
-        android:id="@+id/tvHours2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:text="@string/hours"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/ivMusic"
-        app:layout_constraintEnd_toStartOf="@+id/tvMinute2"
-        app:layout_constraintStart_toEndOf="@+id/tvDay2"
-        app:layout_constraintTop_toBottomOf="@+id/tvHours" />
-
-    <TextView
-        android:id="@+id/tvMinute2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/border3"
-        android:text="@string/minutes"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/ivPlace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvHours2"
-        app:layout_constraintTop_toBottomOf="@+id/tvMinute" />
 
     <Button
         android:id="@+id/btnChange"
         android:layout_width="35dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_write"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvMinute"
+        app:layout_constraintBottom_toTopOf="@+id/ivPlace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvSetProfil"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment2" />
 
     <ImageView
         android:id="@+id/ivPhoto"
@@ -201,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ivOther"
         app:layout_constraintEnd_toStartOf="@+id/ivMusic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDay2"
+        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil"
         app:srcCompat="@drawable/ic_photo2" />
 
     <ImageView
@@ -211,12 +45,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/music"
-        app:layout_constraintBottom_toTopOf="@+id/ivOther"
+        app:layout_constraintBottom_toTopOf="@+id/ivContact"
         app:layout_constraintEnd_toStartOf="@+id/ivPlace"
         app:layout_constraintStart_toEndOf="@+id/ivPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/tvHours2"
+        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil"
         app:srcCompat="@drawable/ic_music2" />
 
     <ImageView
@@ -231,7 +65,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ivContact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivMusic"
-        app:layout_constraintTop_toBottomOf="@+id/tvMinute2"
+        app:layout_constraintTop_toBottomOf="@+id/tvSetProfil"
         app:srcCompat="@drawable/ic_salle3" />
 
     <ImageView
@@ -243,7 +77,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/other_service"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintBottom_toTopOf="@+id/fGuestNumber"
         app:layout_constraintEnd_toStartOf="@+id/ivContact"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
@@ -254,59 +88,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/guest"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintBottom_toTopOf="@+id/fGuestNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivOther"
-        app:layout_constraintTop_toBottomOf="@+id/ivPlace"
+        app:layout_constraintTop_toBottomOf="@+id/ivMusic"
         app:srcCompat="@drawable/ic_invite2" />
 
-    <TextView
-        android:id="@+id/tvResume"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/guest"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <TextView
         android:id="@+id/tvSetProfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/tvDay"
+        app:layout_constraintBottom_toTopOf="@+id/ivPhoto"
         app:layout_constraintEnd_toStartOf="@+id/btnChange"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment2" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/fGuestNumber"
+        android:name="c.kevin.mariage.GuestNumberFragment"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="245dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivOther"
+        tools:layout="@layout/fragment_guest_number" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="495dp" />
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="c.kevin.mariage.UserMainFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/tvSetProfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_user_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,4 +38,8 @@
     <string name="old_persons">Personne Agés</string>
     <string name="womans">Femmes</string>
     <string name="young_persons">Enfants</string>
+    <string name="set_date">Ajouter votre date de mariage</string>
+    <string name="set_name_bride">Ajouter le nom de la Mariée</string>
+    <string name="set_name_groom">Ajouter le nom du Marié</string>
+    <string name="show_guest_list">Voir la liste des invités</string>
 </resources>

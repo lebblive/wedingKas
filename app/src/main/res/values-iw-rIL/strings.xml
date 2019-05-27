@@ -38,4 +38,8 @@
     <string name="old_persons">מבוגרים</string>
     <string name="womans">נשים</string>
     <string name="young_persons">ילדים</string>
+    <string name="set_date">הגדר את תאריך האירוע</string>
+    <string name="set_name_bride">הגדר את שם הכלה</string>
+    <string name="set_name_groom">הגדר את שם החתן</string>
+    <string name="show_guest_list">הצג רשימת המוזמנים</string>
 </resources>

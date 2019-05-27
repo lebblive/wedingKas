@@ -1,19 +1,17 @@
 package c.kevin.mariage;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,12 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -45,34 +38,15 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RC_SIGN_IN = 123;
-    private TextView tvNameMr;
-    private TextView tvNameMme;
-    private TextView tvDateFrench;
-    private TextView tvDay;
-    private TextView tvHours;
-    private TextView tvMinute;
     private Button btnChange;
-    private TextView tvResume;
     private ImageView ivPhoto;
     private ImageView ivMusic;
     private ImageView ivPlace;
     private ImageView ivContact;
     private ImageView ivOther;
     private TextView tvSetProfil;
-
-    Calendar c=Calendar.getInstance();
-
-    private int currentYear=c.get(Calendar.YEAR);
-    private int currentMonth=c.get(Calendar.MONTH)+1;
-    private int currentDay=c.get(Calendar.DAY_OF_MONTH);
-    private int currentHour=c.get(Calendar.HOUR_OF_DAY);
-    private int currentMinute=c.get(Calendar.MINUTE);
-    private int man=0;
-    private int woman=0;
-    private int old =0;
-    private int adult=0;
-    private int young =0;
-
+    private View fGuestNumber;
+    private Boolean viewGuest=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,20 +67,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         login();
         layout();
-        tvNameMr.setOnClickListener(v -> {
-            ProfilFragment profilFragment = new ProfilFragment();
-            profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
-        });
-        tvNameMme.setOnClickListener(v -> {
-            ProfilFragment profilFragment = new ProfilFragment();
-            profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
-        });
-        tvDateFrench.setOnClickListener(v -> {
-                    ProfilFragment profilFragment = new ProfilFragment();
-                    profilFragment.show(getSupportFragmentManager(), "ProfilFragment");
-                });
+        setProfil();
+        fGuestNumber.setVisibility(View.VISIBLE);
+
         btnChange.setOnClickListener(v -> {
             ProfilFragment profilFragment =new ProfilFragment();
             profilFragment.show(getSupportFragmentManager(),"ProfilFragment");
@@ -141,213 +108,56 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this,ivOther,"");
             startActivity(intent,transition.toBundle());
         });
-        fetch();
-        getNumberPerson();
     }
 
-    private void getNumberPerson() {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+    // if a profil nul write set profil
+    private void setProfil() {
+        if (FirebaseAuth.getInstance().getCurrentUser() !=null){
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference dbProfil=FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid).child("profil");
+            dbProfil.addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            DatabaseReference dbRangerContact = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(uid).child("contact");
+                            if (dataSnapshot.exists()) {
 
-            dbRangerContact.addListenerForSingleValueEvent(new ValueEventListener() {
-                // church in db all contact and give me ther children
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ArrayList<String> arrayList= new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String pushKey = snapshot.getKey();
-                        arrayList.add(pushKey);
-                    }
-                    getIdContact(arrayList);
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {}
-                //end recuperation
-
-                //get name one once id contact
-                private void getIdContact(ArrayList<String> arrayList) {
-                    String idC;
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        idC = arrayList.get(i);
-
-                        //rentre dans la liste des contact et recuper toute les info
-                        DatabaseReference dbNumber = FirebaseDatabase.getInstance().getReference()
-                                .child("users").child(uid).child("contact").child(idC);
-                        dbNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                String dsSexe = (String) dataSnapshot.child("sexe").getValue();
-                                String dsAge = (String) dataSnapshot.child("age").getValue();
-
-                                //je comence ici
-                                assert dsSexe != null;
-                                if (dsSexe.equals(getString(R.string.man))) {
-                                    man++;
+                                String nameMr = Objects.requireNonNull(dataSnapshot.child("nameMr").getValue()).toString();
+                                String nameMme = Objects.requireNonNull(dataSnapshot.child("nameMme").getValue()).toString();
+                                String date = Objects.requireNonNull(dataSnapshot.child("date").getValue()).toString();
+                                if (nameMr.isEmpty()) {
+                                    tvSetProfil.setText(getString(R.string.set_name_groom));
+                                    YoYo.with(Techniques.Pulse).duration(3000).repeat(10).playOn(tvSetProfil);
                                 }
-                                if (dsSexe.equals(getString(R.string.woman))){
-                                    woman++;
+                                if (nameMme.isEmpty()) {
+                                    tvSetProfil.setText(getString(R.string.set_name_bride));
+                                    YoYo.with(Techniques.Pulse).duration(3000).repeat(10).playOn(tvSetProfil);
                                 }
-                                assert dsAge != null;
-                                if (dsAge.equals(getString(R.string.old_person))){
-                                    old++;
+                                if (date.equals(getString(R.string.date))) {
+                                    tvSetProfil.setText(getString(R.string.set_date));
+                                    YoYo.with(Techniques.Pulse).duration(3000).repeat(10).playOn(tvSetProfil);
                                 }
-                                if (dsAge.equals(getString(R.string.adult_person))){
-                                    adult++;
-                                }
-                                if (dsAge.equals(getString(R.string.young_person))){
-                                    young++;
-                                }
-
-                                String resume=getString(R.string.Persons_number)+" " + arrayList.size()+ " : ";
-
-                                if (man!=0){
-                                    resume=resume+ "\n"+ man +" " +getString(R.string.mans);
-                                }
-                                if (woman!=0){
-                                    resume=resume+"\n"+
-                                            woman +" " +getString(R.string.womans);
-                                }
-                                if (old!=0){
-                                    resume=resume+"\n"+
-                                            old +" " +getString(R.string.old_persons);
-                                }
-                                if (adult!=0){
-                                    resume=resume+"\n"+
-                                            adult +" " +getString(R.string.adult_persons);
-                                }
-                                if (young!=0){
-                                    resume=resume+"\n"+
-                                            young +" " +getString(R.string.young_persons);
-                                }
-                                tvResume.setText(resume);
+                            }else {
+                                tvSetProfil.setText(getString(R.string.set_your_profil));
+                                YoYo.with(Techniques.Pulse).duration(3000).repeat(10).playOn(tvSetProfil);
                             }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
-                    }
-                }
-            });
-
-        }
-    }
-
-
-
-    //get profile from data base
-    private void fetch() {
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference dbProfil = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(uid).child("profil");
-
-            dbProfil.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("nameMr").getValue() != null) {
-                        String nameMr = Objects.requireNonNull(dataSnapshot.child("nameMr").getValue()).toString();
-                        tvNameMr.setText(nameMr);
-                        YoYo.with(Techniques.DropOut).playOn(tvNameMr);
-
-                    }else {
-                        tvNameMr.setText("");
-                        tvSetProfil.setText(getString(R.string.set_your_profil));
-                    }
-                    if (dataSnapshot.child("nameMme").getValue() != null) {
-                        String nameMme = Objects.requireNonNull(dataSnapshot.child("nameMme").getValue()).toString();
-                        tvNameMme.setText(nameMme);
-                        YoYo.with(Techniques.DropOut).playOn(tvNameMme);
-                    }else {
-                        tvNameMme.setText("");
-                        tvSetProfil.setText(getString(R.string.set_your_profil));
-
-                    }
-                    if (dataSnapshot.child("date").getValue() != null) {
-                        String date = Objects.requireNonNull(dataSnapshot.child("date").getValue()).toString();
-                        tvDateFrench.setText(date);
-                        YoYo.with(Techniques.Landing).playOn(tvDateFrench);
-                    }else {
-                        tvDateFrench.setText("");
-                        tvSetProfil.setText(getString(R.string.set_your_profil));
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            //get dateselected
-            DatabaseReference dbDateSelected = FirebaseDatabase.getInstance().getReference()
-                    .child("users").child(uid).child("profil");
-            dbDateSelected.addListenerForSingleValueEvent(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    // get curent date
-                    String dateToday = currentDay + "/"
-                            + currentMonth + "/"
-                            + currentYear + " "
-                            + currentHour + ":"
-                            + currentMinute;
-                    //get date selected
-                    String dateSelectedOnTv = tvDateFrench.getText().toString();
-                    String dateSelected = dateSelectedOnTv + " " + "20:30";
-
-
-                    // set compte a rebour
-
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-                    try {
-                        Date dDateToday = simpleDateFormat.parse(dateToday);
-                        Date dDateSelected = simpleDateFormat.parse(dateSelected);
-
-                        long differenceDay = dDateSelected.getTime() - dDateToday.getTime();
-                        String restOfDay = String.valueOf(Math.abs((differenceDay / (1000 * 60 * 60 * 24))));
-
-                        String restOfHour = String.valueOf(Math.abs(dDateSelected.getHours() - dDateToday.getHours()));
-                        String restOfMinute = String.valueOf(Math.abs(dDateSelected.getMinutes() - dDateToday.getMinutes()));
-
-                        tvDay.setText(restOfDay);
-                        tvHours.setText(restOfHour);
-                        tvMinute.setText(restOfMinute);
-
-                        //animation
-                        YoYo.with(Techniques.RollIn).playOn(tvDay);
-                        YoYo.with(Techniques.RollIn).playOn(tvHours);
-                        YoYo.with(Techniques.RollIn).playOn(tvMinute);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {}
-            });
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    });
         }
     }
 
     private void layout() {
-        tvNameMr=findViewById(R.id.tvNameMr);
-        tvNameMme=findViewById(R.id.tvNameMme);
-        tvDateFrench=findViewById(R.id.tvDateFrench);
-        tvDay=findViewById(R.id.tvDay);
-        tvHours=findViewById(R.id.tvHours);
-        tvMinute=findViewById(R.id.tvMinute);
         btnChange=findViewById(R.id.btnChange);
-        tvResume=findViewById(R.id.tvResume);
         ivPhoto=findViewById(R.id.ivPhoto);
         ivMusic=findViewById(R.id.ivMusic);
         ivPlace=findViewById(R.id.ivPlace);
         ivContact=findViewById(R.id.ivContact);
         ivOther=findViewById(R.id.ivOther);
         tvSetProfil=findViewById(R.id.tvSetProfil);
+        fGuestNumber=findViewById(R.id.fGuestNumber);
     }
 
     @Override
@@ -378,16 +188,11 @@ public class MainActivity extends AppCompatActivity
                         databaseReference.setValue(new User(dname, email, uid));
                     }
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             };
             databaseReference.addListenerForSingleValueEvent(valueEventListener);
         }
-
-
      }
 
     @Override
@@ -416,9 +221,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            goOut();
+            //dismiss or show the guest list
+            viewGuest = !viewGuest;
+            if (viewGuest) {
+                fGuestNumber.setVisibility(View.INVISIBLE);
+            }else fGuestNumber.setVisibility(View.VISIBLE);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
