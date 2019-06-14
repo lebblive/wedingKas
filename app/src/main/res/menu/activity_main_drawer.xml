@@ -24,7 +24,10 @@
             android:id="@+id/other"
             android:icon="@drawable/ic_other"
             android:title="@string/other_service" />
-
+        <item
+            android:id="@+id/table"
+            android:icon="@drawable/ic_table"
+            android:title="@string/table_s_list"/>
         <item
             android:id="@+id/list"
             android:icon="@drawable/ic_invite2"
@@ -33,6 +36,7 @@
             android:id="@+id/disconect"
             android:icon="@drawable/ic_disconect"
             android:title="@string/disconnect" />
+
     </group>
 
 

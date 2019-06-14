@@ -43,7 +43,7 @@ public class PlaceActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_place);
 
 
-        Button btnAddP = findViewById(R.id.btnAddP);
+        Button btnAddP = findViewById(R.id.btnAddaT);
         rvPlace=findViewById(R.id.rvPlace);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {

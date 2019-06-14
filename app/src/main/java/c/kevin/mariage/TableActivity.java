@@ -1,0 +1,161 @@
+package c.kevin.mariage;
+
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+import java.util.Objects;
+
+import jp.wasabeef.recyclerview.animators.LandingAnimator;
+
+public class TableActivity extends AppCompatActivity {
+
+    private RecyclerView rvTable;
+    private FirebaseRecyclerAdapter adapter;
+    private Button btnBack;
+    String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_table);
+
+        Button btnAddT = findViewById(R.id.btnAddT);
+        rvTable=findViewById(R.id.rvTable);
+        btnBack=findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            Intent intent =new Intent(getApplicationContext(),MainActivity.class);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    TableActivity.this,btnBack,"");
+            startActivity(intent,transition.toBundle());
+        });
+        btnAddT.setOnClickListener(v -> {
+            AddTableFragment addTableFragment = new AddTableFragment();
+            String add="add";
+            Bundle bundle=new Bundle();
+            bundle.putString("add",add);
+            addTableFragment.setArguments(bundle);
+            addTableFragment.show(getSupportFragmentManager(),"addTableFragment");
+        });
+        viewRecyclerViewTable();
+        fetch();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        ConstraintLayout table_root;
+        TextView tvNameT;
+        TextView tvPlaceT;
+        TextView tvNumberPlace;
+        public Button btnDelete;
+
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            table_root=itemView.findViewById(R.id.table_root);
+            tvNameT=itemView.findViewById(R.id.tvNameT);
+            tvPlaceT=itemView.findViewById(R.id.tvPlaceT);
+            tvNumberPlace=itemView.findViewById(R.id.tvNumberPlace);
+            btnDelete=itemView.findViewById(R.id.btnDelete);
+        }
+
+        void setTvNameT(String tvNameTs){
+            tvNameT.setText(tvNameTs);
+        }
+        void setTvPlaceT(String tvPlaceTs){
+            tvPlaceT.setText(tvPlaceTs+" place assise");
+        }
+    }
+
+    //je recupere mes donnes
+    private void fetch() {
+        Query query= FirebaseDatabase.getInstance()
+                .getReference().child("users").child(uid).child("table");
+        FirebaseRecyclerOptions<Table> options=
+                new FirebaseRecyclerOptions.Builder<Table>().setQuery(query, snapshot -> new Table(
+                        snapshot.child("id").getKey(),
+                        (Objects.requireNonNull(snapshot.child("name").getValue())).toString(),
+                        (Objects.requireNonNull(snapshot.child("place").getValue())).toString()
+//                        (snapshot.child("guestFamilyName").getValue()).toString(),
+//                        (snapshot.child("guestFirstName").getValue()).toString()
+//                        Objects.requireNonNull(snapshot.child("guest_name_table").getValue()).toString()
+                )).build();
+
+        adapter = new FirebaseRecyclerAdapter<Table, TableActivity.ViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public TableActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.table_item,parent,false);
+                return new TableActivity.ViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull TableActivity.ViewHolder viewHolder, int i, @NonNull Table table) {
+
+                viewHolder.setTvNameT(table.getNameT());
+                viewHolder.setTvPlaceT(table.getPlaceT());
+
+                //sur la poubelle
+                viewHolder.btnDelete.setOnClickListener(v -> {
+                    String tid= table.getNameT();
+                    System.out.println(tid);
+                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
+                            .child("users").child(uid).child("table").child(tid);
+                    databaseReference.removeValue();
+                });
+
+                //si je click
+                viewHolder.table_root.setOnClickListener(v -> {
+                    String tid= table.getNameT();
+                    AddTableFragment addTableFragment=new AddTableFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("tid",tid);
+                    addTableFragment.setArguments(bundle);
+                    addTableFragment.show(getSupportFragmentManager(),"addTableFragment");
+                });
+
+            }
+        };
+        rvTable.setAdapter(adapter);
+    }
+    private void viewRecyclerViewTable() {
+        LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
+        rvTable.setItemAnimator(animator);
+        Objects.requireNonNull(rvTable.getItemAnimator()).setAddDuration(1500);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTable.setLayoutManager(linearLayoutManager);
+        rvTable.setHasFixedSize(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+}

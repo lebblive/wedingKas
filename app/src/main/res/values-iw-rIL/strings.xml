@@ -42,4 +42,5 @@
     <string name="set_name_bride">הגדר את שם הכלה</string>
     <string name="set_name_groom">הגדר את שם החתן</string>
     <string name="show_guest_list">הצג רשימת המוזמנים</string>
+    <string name="table_s_list">שולחנות המוזמנים</string>
 </resources>

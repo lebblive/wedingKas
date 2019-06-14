@@ -9,6 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,11 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
 
 
 /**
@@ -156,7 +156,7 @@ public class AddPlaceFragment extends AppCompatDialogFragment {
         etMailP=view.findViewById(R.id.etMailP);
         etNoteP=view.findViewById(R.id.etNoteP);
         etPriceP=view.findViewById(R.id.etPriceP);
-        btnSaveP=view.findViewById(R.id.btnSaveP);
+        btnSaveP=view.findViewById(R.id.btnAddaT);
     }
 
 }

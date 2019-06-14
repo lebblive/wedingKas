@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView ivPlace;
     private ImageView ivContact;
     private ImageView ivOther;
+    private ImageView ivTable;
     private TextView tvSetProfil;
     private View fGuestNumber;
     private Boolean viewGuest=false;
@@ -108,6 +109,12 @@ public class MainActivity extends AppCompatActivity
                     MainActivity.this,ivOther,"");
             startActivity(intent,transition.toBundle());
         });
+        ivTable.setOnClickListener(v -> {
+            Intent intent=new Intent(getApplicationContext(),TableActivity.class);
+            ActivityOptions transition=ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this,ivTable,"");
+            startActivity(intent,transition.toBundle());
+        });
     }
 
     // if a profil nul write set profil
@@ -156,6 +163,7 @@ public class MainActivity extends AppCompatActivity
         ivPlace=findViewById(R.id.ivPlace);
         ivContact=findViewById(R.id.ivContact);
         ivOther=findViewById(R.id.ivOther);
+        ivTable=findViewById(R.id.ivTable);
         tvSetProfil=findViewById(R.id.tvSetProfil);
         fGuestNumber=findViewById(R.id.fGuestNumber);
     }
@@ -249,7 +257,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),MusicActivity.class);
             startActivity(intent);
         } else if (id == R.id.other) {
-            Intent intent = new Intent(getApplicationContext(),OtherActivity.class);
+            Intent intent = new Intent(getApplicationContext(), OtherActivity.class);
+            startActivity(intent);
+        }else if (id==R.id.table){
+            Intent intent=new Intent(getApplicationContext(),TableActivity.class);
             startActivity(intent);
         } else if (id == R.id.list) {
             Intent intent=new Intent(getApplicationContext(),ContactListActivity.class);

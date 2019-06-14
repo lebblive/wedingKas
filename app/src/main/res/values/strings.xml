@@ -51,5 +51,6 @@
     <string name="set_name_bride">Set bride name</string>
     <string name="set_date">Set date</string>
     <string name="show_guest_list">show guest list</string>
+    <string name="table_s_list">Table\'s List</string>
 
 </resources>

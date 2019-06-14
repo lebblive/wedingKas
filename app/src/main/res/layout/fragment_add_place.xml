@@ -92,7 +92,7 @@
         android:layout_marginBottom="8dp"
         android:hint="@string/note"
         android:inputType="textLongMessage"
-        app:layout_constraintBottom_toTopOf="@+id/btnSaveP"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddaT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPriceP"
@@ -100,7 +100,7 @@
         tools:targetApi="o"  />
 
     <Button
-        android:id="@+id/btnSaveP"
+        android:id="@+id/btnAddaT"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"

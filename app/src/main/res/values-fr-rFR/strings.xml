@@ -42,4 +42,5 @@
     <string name="set_name_bride">Ajouter le nom de la Mariée</string>
     <string name="set_name_groom">Ajouter le nom du Marié</string>
     <string name="show_guest_list">Voir la liste des invités</string>
+    <string name="table_s_list">Table des invités</string>
 </resources>

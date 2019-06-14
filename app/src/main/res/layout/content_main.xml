@@ -47,7 +47,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/music"
-        app:layout_constraintBottom_toTopOf="@+id/ivContact"
+        app:layout_constraintBottom_toTopOf="@+id/ivTable"
         app:layout_constraintEnd_toStartOf="@+id/ivPlace"
         app:layout_constraintStart_toEndOf="@+id/ivPhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvSetProfil"
@@ -78,7 +78,7 @@
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/other_service"
         app:layout_constraintBottom_toTopOf="@+id/fGuestNumber"
-        app:layout_constraintEnd_toStartOf="@+id/ivContact"
+        app:layout_constraintEnd_toStartOf="@+id/ivTable"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
         app:srcCompat="@drawable/ic_other" />
@@ -88,12 +88,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/guest"
         app:layout_constraintBottom_toTopOf="@+id/fGuestNumber"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivOther"
+        app:layout_constraintStart_toEndOf="@+id/ivTable"
         app:layout_constraintTop_toBottomOf="@+id/ivMusic"
         app:srcCompat="@drawable/ic_invite2" />
 
@@ -139,5 +140,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_user_main" />
+
+    <ImageView
+        android:id="@+id/ivTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/fGuestNumber"
+        app:layout_constraintEnd_toStartOf="@+id/ivContact"
+        app:layout_constraintStart_toEndOf="@+id/ivOther"
+        app:layout_constraintTop_toBottomOf="@+id/ivMusic"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_table" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

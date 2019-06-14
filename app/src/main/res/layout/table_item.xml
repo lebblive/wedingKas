@@ -15,7 +15,7 @@
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/other_root"
+        android:id="@+id/table_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
@@ -27,9 +27,8 @@
         tools:layout_editor_absoluteX="2dp"
         tools:layout_editor_absoluteY="2dp">
 
-
         <TextView
-            android:id="@+id/tvNameO"
+            android:id="@+id/tvNameT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -38,91 +37,49 @@
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/etPhoneO"
+            app:layout_constraintBottom_toTopOf="@+id/tvPlaceT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/etPhoneO"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textAlignment="textStart"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etAdressO"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameO" />
-
-        <TextView
-            android:id="@+id/etAdressO"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textAlignment="viewStart"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etMailO"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPhoneO" />
-
-        <TextView
-            android:id="@+id/etMailO"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textAlignment="textStart"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etPriceO"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etAdressO" />
-
-        <TextView
-            android:id="@+id/etPriceO"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textAlignment="textStart"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/etNoteO"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etMailO" />
-
-        <TextView
-            android:id="@+id/etNoteO"
+            android:id="@+id/tvPlaceT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:textAlignment="textStart"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintBottom_toTopOf="@+id/btnDelete"
+            app:layout_constraintEnd_toStartOf="@+id/tvNumberPlace"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPriceO" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNameT" />
 
+        <TextView
+            android:id="@+id/tvNumberPlace"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/btnDelete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvPlaceT"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameT" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/ic_delete2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/etNoteO"
-            app:layout_constraintTop_toBottomOf="@+id/etPriceO" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNumberPlace" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>
