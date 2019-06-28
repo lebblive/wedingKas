@@ -16,12 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
+        <activity android:name=".ChairActivity"></activity>
         <activity
             android:name=".TableActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ContactListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".OtherActivity"
             android:screenOrientation="portrait" />

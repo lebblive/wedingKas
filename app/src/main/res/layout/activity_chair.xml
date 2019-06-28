@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChairActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChair"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveChair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTableName" />
+
+    <EditText
+        android:id="@+id/etTableName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/rvChair"
+        app:layout_constraintEnd_toStartOf="@+id/etNumberSit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="no"
+        tools:targetApi="o"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/etNumberSit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/rvChair"
+        app:layout_constraintEnd_toStartOf="@+id/tvEmptySit"
+        app:layout_constraintStart_toEndOf="@+id/etTableName"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="no"
+        tools:targetApi="o"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/tvEmptySit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/rvChair"
+        app:layout_constraintEnd_toStartOf="@+id/btnGenerate"
+        app:layout_constraintStart_toEndOf="@+id/etNumberSit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnGenerate"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_create"
+        app:layout_constraintBottom_toTopOf="@+id/rvChair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvEmptySit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnSaveChair"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_save2"
+        android:contentDescription="@string/fui_button_text_save" />
+
+    <Button
+        android:id="@+id/btnNew"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ic_add2"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvChair" />
+
+    <ImageView
+        android:id="@+id/btnAddContact"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSaveChair"
+        app:layout_constraintStart_toEndOf="@+id/btnNew"
+        app:layout_constraintTop_toBottomOf="@+id/rvChair"
+        app:srcCompat="@drawable/ic_add_contact"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivQuestAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/btnNew"
+        app:layout_constraintTop_toBottomOf="@+id/rvChair"
+        app:srcCompat="@drawable/ic_question"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivQuestContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/btnAddContact"
+        app:layout_constraintTop_toBottomOf="@+id/rvChair"
+        app:srcCompat="@drawable/ic_question"
+        tools:ignore="ContentDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

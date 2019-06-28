@@ -1,5 +1,6 @@
 package c.kevin.mariage;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,9 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -40,7 +44,7 @@ public class TableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
-        Button btnAddT = findViewById(R.id.btnAddT);
+        Button btnAddT = findViewById(R.id.btnNew);
         rvTable=findViewById(R.id.rvTable);
         btnBack=findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
@@ -50,12 +54,8 @@ public class TableActivity extends AppCompatActivity {
             startActivity(intent,transition.toBundle());
         });
         btnAddT.setOnClickListener(v -> {
-            AddTableFragment addTableFragment = new AddTableFragment();
-            String add="add";
-            Bundle bundle=new Bundle();
-            bundle.putString("add",add);
-            addTableFragment.setArguments(bundle);
-            addTableFragment.show(getSupportFragmentManager(),"addTableFragment");
+            Intent intent = new Intent(getApplicationContext(),ChairActivity.class);
+            startActivity(intent);
         });
         viewRecyclerViewTable();
         fetch();
@@ -81,8 +81,9 @@ public class TableActivity extends AppCompatActivity {
         void setTvNameT(String tvNameTs){
             tvNameT.setText(tvNameTs);
         }
+        @SuppressLint("SetTextI18n")
         void setTvPlaceT(String tvPlaceTs){
-            tvPlaceT.setText(tvPlaceTs+" place assise");
+            tvPlaceT.setText(tvPlaceTs+ getString(R.string.sit));
         }
     }
 
@@ -95,9 +96,6 @@ public class TableActivity extends AppCompatActivity {
                         snapshot.child("id").getKey(),
                         (Objects.requireNonNull(snapshot.child("name").getValue())).toString(),
                         (Objects.requireNonNull(snapshot.child("place").getValue())).toString()
-//                        (snapshot.child("guestFamilyName").getValue()).toString(),
-//                        (snapshot.child("guestFirstName").getValue()).toString()
-//                        Objects.requireNonNull(snapshot.child("guest_name_table").getValue()).toString()
                 )).build();
 
         adapter = new FirebaseRecyclerAdapter<Table, TableActivity.ViewHolder>(options) {
@@ -119,26 +117,60 @@ public class TableActivity extends AppCompatActivity {
                 //sur la poubelle
                 viewHolder.btnDelete.setOnClickListener(v -> {
                     String tid= table.getNameT();
-                    System.out.println(tid);
+
                     DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference()
                             .child("users").child(uid).child("table").child(tid);
-                    databaseReference.removeValue();
+
+                    DatabaseReference dbChair = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(uid)
+                    .child("chair");
+
+                    // je veut recupere le id des inviter pour pouvoir rentrer dedans
+
+            dbChair.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        String idChair = Objects.requireNonNull(snapshot.child("tableName").getValue()).toString();
+                        String fname = Objects.requireNonNull(snapshot.child("firstName").getValue()).toString();
+
+                        /*
+                        si japuie sur la poubelle sa suprime la table et
+                        tout les inviter qui son dedans ->
+                        ceux dont les inbiter on pour tablename le meme nom que le nom de la table en question.
+                         */
+                        if (idChair.equals(tid)){
+                            DatabaseReference dbChair2 = FirebaseDatabase.getInstance().getReference()
+                                    .child("users").child(uid)
+                                    .child("chair").child(fname);
+                            dbChair2.removeValue();
+                            databaseReference.removeValue();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            });
                 });
 
                 //si je click
                 viewHolder.table_root.setOnClickListener(v -> {
                     String tid= table.getNameT();
-                    AddTableFragment addTableFragment=new AddTableFragment();
+
+                    Intent intent = new Intent(getApplicationContext(),ChairActivity.class);
                     Bundle bundle=new Bundle();
                     bundle.putString("tid",tid);
-                    addTableFragment.setArguments(bundle);
-                    addTableFragment.show(getSupportFragmentManager(),"addTableFragment");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 });
-
             }
         };
         rvTable.setAdapter(adapter);
     }
+
+
     private void viewRecyclerViewTable() {
         LandingAnimator animator=new LandingAnimator(new OvershootInterpolator(1f));
         rvTable.setItemAnimator(animator);

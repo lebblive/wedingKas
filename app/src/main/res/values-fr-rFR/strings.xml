@@ -43,4 +43,6 @@
     <string name="set_name_groom">Ajouter le nom du Marié</string>
     <string name="show_guest_list">Voir la liste des invités</string>
     <string name="table_s_list">Table des invités</string>
+    <string name="chair">chair</string>
+    <string name="sit">places assises</string>
 </resources>

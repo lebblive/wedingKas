@@ -43,4 +43,6 @@
     <string name="set_name_groom">הגדר את שם החתן</string>
     <string name="show_guest_list">הצג רשימת המוזמנים</string>
     <string name="table_s_list">שולחנות המוזמנים</string>
+    <string name="chair">chair</string>
+    <string name="sit">מושבים</string>
 </resources>

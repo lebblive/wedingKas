@@ -13,13 +13,13 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddT"
+        app:layout_constraintBottom_toTopOf="@+id/btnNew"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <Button
-        android:id="@+id/btnAddT"
+        android:id="@+id/btnNew"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
