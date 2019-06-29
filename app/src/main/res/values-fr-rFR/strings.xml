@@ -45,4 +45,8 @@
     <string name="table_s_list">Table des invités</string>
     <string name="chair">chair</string>
     <string name="sit">places assises</string>
+    <string name="addNewSit">ajouter des nouvelle chaise</string>
+    <string name="addForContactList">ajouter depuis votre liste de contact</string>
+    <string name="needWriteName">entrer le nom de la table dabor</string>
+    <string name="info_click">cliquer sur carré pour sélectionner votre contacte puis cliquer dessu pour l\'enregistrer</string>
 </resources>

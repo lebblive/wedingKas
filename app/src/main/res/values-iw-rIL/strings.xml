@@ -45,4 +45,8 @@
     <string name="table_s_list">שולחנות המוזמנים</string>
     <string name="chair">chair</string>
     <string name="sit">מושבים</string>
+    <string name="addNewSit">להוסיף כיסא חדש</string>
+    <string name="addForContactList">להוסיף מרשימת המוזמנים</string>
+    <string name="needWriteName">רשום את שם השולחן קודם</string>
+    <string name="info_click">סמן את ברירתך ולחץ עליו כדי לשמור</string>
 </resources>

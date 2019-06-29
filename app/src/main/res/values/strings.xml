@@ -54,5 +54,9 @@
     <string name="table_s_list">Table\'s List</string>
     <string name="chair">chair</string>
     <string name="sit">sit</string>
+    <string name="addNewSit">add a new sit</string>
+    <string name="addForContactList">add on your contact list</string>
+    <string name="needWriteName">you need write a table name first</string>
+    <string name="info_click">click on the checkbox and click on the row for the save your contact in this table</string>
 
 </resources>

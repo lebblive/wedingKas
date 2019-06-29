@@ -36,7 +36,6 @@ import java.util.Objects;
 import jp.wasabeef.recyclerview.animators.LandingAnimator;
 
 
-// on commence ici 21h11 --
 
 public class ChairActivity extends AppCompatActivity {
     private RecyclerView rvChair;
@@ -81,17 +80,26 @@ public class ChairActivity extends AppCompatActivity {
         });
 
         btnAddContact.setOnClickListener(v -> {
-//            AddContactFragment addContactFragment = new AddContactFragment();
-//            addContactFragment.show(getSupportFragmentManager(),"addContactFragment");
+            String tableName = etTableName.getText().toString();
+            if (!tableName.isEmpty()){
+                AddContactExist_Fragment addContactExist_fragment = new AddContactExist_Fragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("tableName", tableName);
+                addContactExist_fragment.setArguments(bundle);
+                addContactExist_fragment.show(getSupportFragmentManager(),"AddContactExist_Fragment");
 
+            }else {
+                etTableName.setError("you need write a name on table first");
+            }
         });
 
-        //todo : metre le text en string.
         ivQuestAdd.setOnClickListener(v -> {
-            Toast.makeText(this, "ajouter des nouvelle chaise", Toast.LENGTH_SHORT).show();
+            String addNewSit = getString(R.string.addNewSit);
+            Toast.makeText(this, addNewSit, Toast.LENGTH_SHORT).show();
         });
         ivQuestContact.setOnClickListener(v -> {
-            Toast.makeText(this, "ajouter depuis votre liste de contact", Toast.LENGTH_SHORT).show();
+            String addForContactList = getString(R.string.addForContactList);
+            Toast.makeText(this, addForContactList, Toast.LENGTH_SHORT).show();
         });
 
         viewRecyclerViewChair();
@@ -121,7 +129,7 @@ public class ChairActivity extends AppCompatActivity {
             mapChair.put("place", etNumberSit.getText().toString());
             databaseReference.setValue(mapChair);
         } else {
-            etTableName.setError("you need write name");
+            etTableName.setError(getString(R.string.needWriteName));
         }
     }
 
@@ -136,10 +144,6 @@ public class ChairActivity extends AppCompatActivity {
             DatabaseReference dbTable = FirebaseDatabase.getInstance().getReference()
                     .child("users").child(uid)
                     .child("table").child(tid);
-
-//            DatabaseReference dbChair = FirebaseDatabase.getInstance().getReference()
-//                    .child("users").child(uid)
-//                    .child("chair");
 
             dbTable.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -196,6 +200,7 @@ public class ChairActivity extends AppCompatActivity {
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ConstraintLayout chair_root;
+
         TextView tvFamilyNameChair;
         TextView tvFirstNameChair;
 
@@ -237,6 +242,7 @@ public class ChairActivity extends AppCompatActivity {
             }
 
             @Override
+
             // ecrit sur chacun d'entre eux
             protected void onBindViewHolder(@NonNull ChairActivity.ViewHolder viewHolder, int i, @NonNull Chair chair) {
 
@@ -265,19 +271,24 @@ public class ChairActivity extends AppCompatActivity {
 
                 btnNew.setOnClickListener(v -> {
                     AddChairFragment addChairFragment = new AddChairFragment();
+                    AddContactExist_Fragment addContactExist_fragment = new AddContactExist_Fragment();
 
                     Bundle bundle = new Bundle();
                     String tableid = etTableName.getText().toString();
                     String chairid = viewHolder.tvFirstNameChair.getText().toString();
                     bundle.putString("chairid", chairid);
                     bundle.putString("tableid", tableid);
+                    addContactExist_fragment.setArguments(bundle);
                     addChairFragment.setArguments(bundle);
                     addChairFragment.show(getSupportFragmentManager(), "addChairFragment");
                 });
+
+
                 //si je click sur l'un d'entre eux
                 viewHolder.chair_root.setOnClickListener(v -> {
                     //ouvre addChair et envoi lui le id
                     AddChairFragment addChairFragment = new AddChairFragment();
+                    AddContactExist_Fragment addContactExist_fragment = new AddContactExist_Fragment();
 
                     Bundle bundle = new Bundle();
                     String tableid = etTableName.getText().toString();
@@ -285,6 +296,7 @@ public class ChairActivity extends AppCompatActivity {
                     bundle.putString("chairid", chairid);
                     bundle.putString("tableid", tableid);
                     addChairFragment.setArguments(bundle);
+                    addContactExist_fragment.setArguments(bundle);
                     addChairFragment.show(getSupportFragmentManager(), "addChairFragment");
                 });
             }
@@ -329,7 +341,7 @@ public class ChairActivity extends AppCompatActivity {
 
                 //si je click lontem
                 holder.chair_root.setOnLongClickListener(v -> {
-                    holder.chair_root.setBackgroundColor(Color.RED);
+                    holder.chair_root.setBackgroundColor(Color.YELLOW);
                     return true;
                 });
             }

@@ -71,8 +71,7 @@ public class AddContactFragment extends AppCompatDialogFragment {
         assert this.getArguments() != null;
         if (Objects.equals(this.getArguments().getString("autre"), this.getArguments().getString("add"))) {
             getInfo();
-        }else {
-            return;
+
         }
 
         btnSaveContact.setOnClickListener(v -> setInfoFoto());
